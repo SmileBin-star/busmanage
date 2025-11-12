@@ -1,0 +1,31 @@
+spring:
+  datasource:
+    driver-class-name: com.mysql.cj.jdbc.Driver
+    url: jdbc:mysql://localhost:3306/bus_management?useUnicode=true&characterEncoding=utf8&serverTimezone=GMT%2B8&allowPublicKeyRetrieval=true&useSSL=false
+    username: root
+    password: mysql
+  mvc:
+    view:
+      prefix: /WEB-INF/jsp/
+      suffix: .jsp
+    pathmatch:
+      matching-strategy: ant_path_matcher  # 兼容JSP路径匹配
+  web:
+    resources:
+      static-locations: classpath:/static/
+  jpa:
+    open-in-view: false
+
+mybatis:
+  mapper-locations: classpath:mybatis/*.xml
+  type-aliases-package: com.bus.model.entity
+  configuration:
+    map-underscore-to-camel-case: true  # 下划线转驼峰
+    log-impl: org.apache.ibatis.logging.stdout.StdOutImpl  # 日志输出
+
+server:
+  port: 8080
+  servlet:
+    context-path: /bus
+  tomcat:
+    uri-encoding: UTF-8

@@ -1,0 +1,71 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="org.example.busmanagement.dao.RouteMapper">
+    <select id="selectAll" resultType="org.example.busmanagement.model.entity.BusRoute">
+        SELECT
+            r.*,
+            s1.station_name AS start_station_name,
+            s2.station_name AS end_station_name
+        FROM bus_routes r
+                 LEFT JOIN bus_stations s1 ON r.start_station = s1.station_id
+                 LEFT JOIN bus_stations s2 ON r.end_station = s2.station_id
+        ORDER BY r.route_id DESC
+            LIMIT #{pageNum}, #{pageSize}
+    </select>
+
+    <select id="countTotal" resultType="int">
+        SELECT COUNT(*) FROM bus_routes
+    </select>
+
+    <select id="selectById" resultType="org.example.busmanagement.model.entity.BusRoute">
+        SELECT
+            r.*,
+            s1.station_name AS start_station_name,
+            s2.station_name AS end_station_name
+        FROM bus_routes r
+                 LEFT JOIN bus_stations s1 ON r.start_station = s1.station_id
+                 LEFT JOIN bus_stations s2 ON r.end_station = s2.station_id
+        WHERE r.route_id = #{routeId}
+    </select>
+
+    <select id="selectStationsByRouteId" resultType="org.example.busmanagement.model.entity.BusStation">
+        SELECT
+            s.*,
+            rs.station_order,
+            rs.distance_from_prev,
+            rs.estimated_time
+        FROM bus_stations s
+                 JOIN bus_route_stations rs ON s.station_id = rs.station_id
+        WHERE rs.route_id = #{routeId}
+        ORDER BY rs.station_order ASC
+    </select>
+
+    <insert id="insert" useGeneratedKeys="true" keyProperty="routeId">
+        INSERT INTO bus_routes (
+            route_name, start_station, end_station, total_stations,
+            total_distance, departure_time, arrival_time, status
+        ) VALUES (
+                     #{routeName}, #{startStation}, #{endStation}, #{totalStations},
+                     #{totalDistance}, #{departureTime}, #{arrivalTime}, #{status}
+                 )
+    </insert>
+
+    <update id="update">
+        UPDATE bus_routes SET
+                              route_name = #{routeName},
+                              start_station = #{startStation},
+                              end_station = #{endStation},
+                              total_stations = #{totalStations},
+                              total_distance = #{totalDistance},
+                              departure_time = #{departureTime},
+                              arrival_time = #{arrivalTime},
+                              status = #{status}
+        WHERE route_id = #{routeId}
+    </update>
+
+    <update id="updateStatus">
+        UPDATE bus_routes SET status = #{status} WHERE route_id = #{routeId}
+    </update>
+</mapper>

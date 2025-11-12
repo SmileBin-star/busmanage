@@ -1,0 +1,69 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="org.example.busmanagement.dao.StationMapper">
+
+    <!-- 分页查询所有站点 -->
+    <select id="selectAll" resultType="org.example.busmanagement.model.entity.BusStation">
+        SELECT * FROM bus_stations
+        ORDER BY station_id DESC
+            LIMIT #{pageNum}, #{pageSize}
+    </select>
+
+    <!-- 查询总记录数 -->
+    <select id="countTotal" resultType="int">
+        SELECT COUNT(*) FROM bus_stations
+    </select>
+
+    <!-- 根据ID查询站点 -->
+    <select id="selectById" resultType="org.example.busmanagement.model.entity.BusStation">
+        SELECT * FROM bus_stations WHERE station_id = #{stationId}
+    </select>
+
+    <!-- 查询所有启用的站点 -->
+    <select id="selectAllActive" resultType="org.example.busmanagement.model.entity.BusStation">
+        SELECT * FROM bus_stations WHERE status = 1 ORDER BY station_name ASC
+    </select>
+
+    <!-- 查询站点所属的线路ID -->
+    <select id="selectRouteIdsByStationId" resultType="int">
+        SELECT DISTINCT route_id FROM bus_route_stations
+        WHERE station_id = #{stationId}
+    </select>
+
+    <!-- 新增站点 -->
+    <insert id="insert" useGeneratedKeys="true" keyProperty="stationId">
+        INSERT INTO bus_stations (
+            station_name, latitude, longitude, address,
+            station_type, status
+        ) VALUES (
+                     #{stationName}, #{latitude}, #{longitude}, #{address},
+                     #{stationType}, #{status}
+                 )
+    </insert>
+
+    <!-- 更新站点信息 -->
+    <update id="update">
+        UPDATE bus_stations SET
+                                station_name = #{stationName},
+                                latitude = #{latitude},
+                                longitude = #{longitude},
+                                address = #{address},
+                                station_type = #{stationType},
+                                status = #{status}
+        WHERE station_id = #{stationId}
+    </update>
+
+    <!-- 更改站点状态 -->
+    <update id="updateStatus">
+        UPDATE bus_stations SET status = #{status} WHERE station_id = #{stationId}
+    </update>
+
+    <!-- 根据名称模糊查询 -->
+    <select id="selectByNameLike" resultType="org.example.busmanagement.model.entity.BusStation">
+        SELECT * FROM bus_stations
+        WHERE station_name LIKE CONCAT('%', #{name}, '%') AND status = 1
+        ORDER BY station_name ASC
+    </select>
+</mapper>
