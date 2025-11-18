@@ -1,0 +1,72 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="org.example.busmanagement.dao.SystemNoticeMapper">
+
+    <!-- 新增通知 -->
+    <insert id="insert" useGeneratedKeys="true" keyProperty="noticeId">
+        INSERT INTO system_notices (
+            title, content, publisher_id, publish_time,
+            status, read_count
+        ) VALUES (
+                     #{title}, #{content}, #{publisherId}, #{publishTime},
+                     #{status}, #{readCount}
+                 )
+    </insert>
+
+    <!-- 更新通知 -->
+    <update id="update">
+        UPDATE system_notices SET
+                                  title = #{title},
+                                  content = #{content},
+                                  publisher_id = #{publisherId}
+        WHERE notice_id = #{noticeId}
+    </update>
+
+    <!-- 更新状态 -->
+    <update id="updateStatus">
+        UPDATE system_notices SET
+            status = #{status}
+        WHERE notice_id = #{noticeId}
+    </update>
+
+    <!-- 增加阅读次数 -->
+    <update id="incrementReadCount">
+        UPDATE system_notices SET
+            read_count = read_count + 1
+        WHERE notice_id = #{noticeId}
+    </update>
+
+    <!-- 根据ID查询 -->
+    <select id="selectById" resultType="org.example.busmanagement.model.entity.SystemNotice">
+        SELECT * FROM system_notices
+        WHERE notice_id = #{noticeId}
+    </select>
+
+    <!-- 分页查询 -->
+    <select id="selectPage" resultType="org.example.busmanagement.model.entity.SystemNotice">
+        SELECT * FROM system_notices
+        <where>
+            <if test="status != null">AND status = #{status}</if>
+        </where>
+        ORDER BY publish_time DESC
+        LIMIT #{pageNum}, #{pageSize}
+    </select>
+
+    <!-- 统计总数 -->
+    <select id="countTotal" resultType="int">
+        SELECT COUNT(*) FROM system_notices
+        <where>
+            <if test="status != null">AND status = #{status}</if>
+        </where>
+    </select>
+
+    <!-- 查询最新通知 -->
+    <select id="selectLatest" resultType="org.example.busmanagement.model.entity.SystemNotice">
+        SELECT * FROM system_notices
+        WHERE status = 1
+        ORDER BY publish_time DESC
+        LIMIT #{limit}
+    </select>
+</mapper>
