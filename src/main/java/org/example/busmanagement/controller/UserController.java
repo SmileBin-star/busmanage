@@ -25,7 +25,7 @@ public class UserController {
     private UserLoginLogService loginLogService;
 
     // 登录页面
-    @GetMapping("/login")
+    @GetMapping("/login")  // 方法级别路径，完整路径为 /user/login
     public String loginPage() {
         return "user/login";
     }

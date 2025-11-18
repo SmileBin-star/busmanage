@@ -15,9 +15,6 @@ public class UserCollectionController {
     @Resource
     private UserCollectionService userCollectionService;
 
-    /**
-     * 添加收藏
-     */
     @PostMapping("/add")
     public Result addCollection(
             @RequestParam Integer userId,
@@ -33,9 +30,6 @@ public class UserCollectionController {
         }
     }
 
-    /**
-     * 取消收藏
-     */
     @PostMapping("/cancel")
     public Result cancelCollection(
             @RequestParam Integer userId,
