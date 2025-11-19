@@ -33,8 +33,8 @@ public class UserController {
     // 执行登录
     @PostMapping("/login")
     @ResponseBody
-    public Result login(@RequestParam String username, 
-                       @RequestParam String password, 
+    public Result login(@RequestParam String username,
+                       @RequestParam String password,
                        HttpServletRequest request) {
         try {
             // 1. 查询用户
@@ -59,7 +59,26 @@ public class UserController {
                 // 登录成功，存储用户信息到Session
                 request.getSession().setAttribute("loginUser", user);
                 request.getSession().setAttribute("currentLogId", logId);
-                return Result.success("登录成功");
+
+                // 根据角色跳转不同首页
+                String redirectUrl;
+                switch (user.getRoleType()) {
+                    case 1:  // 普通用户
+                        redirectUrl = "/user/index";
+                        break;
+                    case 2:  // 管理员
+                        redirectUrl = "/admin/dashboard";
+                        break;
+                    case 3:  // 司机
+                        redirectUrl = "/driver/workbench";
+                        break;
+                    case 4:  // 调度员
+                        redirectUrl = "/dispatcher/schedule";
+                        break;
+                    default:
+                        redirectUrl = "/user/login"; // 角色异常返回登录页
+                }
+                return Result.success(redirectUrl); // 前端接收后跳转
             } else {
                 return Result.error("密码错误");
             }
