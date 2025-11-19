@@ -2,6 +2,7 @@
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <!DOCTYPE html>
 <html lang="zh-CN">
+<script src="https://cdn.jsdelivr.net/npm/jquery@3.7.1/dist/jquery.min.js"></script>
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -164,7 +165,7 @@
                 </div>
 
                 <!-- 登录表单 -->
-                <form id="loginForm" action="${pageContext.request.contextPath}/user/login" method="post" class="space-y-6">
+                <form id="loginForm" action="javascript:;"  method="post" class="space-y-6">
                     <!-- 用户名输入 -->
                     <div class="form-group">
                         <label for="username" class="block text-sm font-medium text-slate-700 mb-2">
@@ -435,26 +436,40 @@
         });
 
         // 表单提交处理
+        // ✅ 阻止默认提交，统一走 AJAX
         form.addEventListener('submit', function(e) {
+            e.preventDefault(); // 关键：阻止浏览器默认提交
+
             const username = usernameInput.value.trim();
             const password = passwordInput.value;
 
-            // 清除之前的错误信息
-            hideErrorMessage();
-
-            // 验证输入
-            if (!validateForm(username, password)) {
-                e.preventDefault();
-                // 添加抖动动画
-                form.classList.add('error-shake');
-                setTimeout(() => {
-                    form.classList.remove('error-shake');
-                }, 500);
+            // 简单非空校验
+            if (!username || !password) {
+                alert('请输入用户名和密码');
                 return;
             }
 
-            // 显示加载状态
+            // 显示加载动画
             showLoadingState();
+
+            // ✅ 发 AJAX 登录请求
+            $.post('/bus/user/login', {username, password}, function (res) {
+                if (res.code === 200 && res.data) {
+                    // ✅ 登录成功，跳转
+                    window.location.href = res.data;
+                } else {
+                    alert(res.msg || '登录失败');
+                    // 恢复按钮
+                    $('#btn-text').removeClass('hidden');
+                    $('#loading-spinner').addClass('hidden');
+                    $('#loginBtn').prop('disabled', false);
+                }
+            }).fail(function () {
+                alert('网络错误，请重试');
+                $('#btn-text').removeClass('hidden');
+                $('#loading-spinner').addClass('hidden');
+                $('#loginBtn').prop('disabled', false);
+            });
         });
     }
 

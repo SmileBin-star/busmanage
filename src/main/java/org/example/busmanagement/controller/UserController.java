@@ -1,5 +1,6 @@
 package org.example.busmanagement.controller;
 
+import jakarta.servlet.http.HttpSession;
 import org.example.busmanagement.exception.BusinessException;
 import org.example.busmanagement.model.entity.User;
 import org.example.busmanagement.model.entity.UserLoginLog;
@@ -29,7 +30,6 @@ public class UserController {
     public String loginPage() {
         return "user/login";
     }
-
     // 执行登录
     @PostMapping("/login")
     @ResponseBody
@@ -61,23 +61,8 @@ public class UserController {
                 request.getSession().setAttribute("currentLogId", logId);
 
                 // 根据角色跳转不同首页
-                String redirectUrl;
-                switch (user.getRoleType()) {
-                    case 1:  // 普通用户
-                        redirectUrl = "/user/index";
-                        break;
-                    case 2:  // 管理员
-                        redirectUrl = "/admin/dashboard";
-                        break;
-                    case 3:  // 司机
-                        redirectUrl = "/driver/workbench";
-                        break;
-                    case 4:  // 调度员
-                        redirectUrl = "/dispatcher/schedule";
-                        break;
-                    default:
-                        redirectUrl = "/user/login"; // 角色异常返回登录页
-                }
+                String ctx = request.getContextPath();   //  "/bus"
+                String redirectUrl = ctx + "/user/index";
                 return Result.success(redirectUrl); // 前端接收后跳转
             } else {
                 return Result.error("密码错误");
@@ -85,6 +70,10 @@ public class UserController {
         } catch (BusinessException e) {
             return Result.error(e.getMessage());
         }
+    }
+    @GetMapping("/index")
+    public String userIndex() {
+        return "user/index"; // 返回统一的 index 页面
     }
 
     // 登出
