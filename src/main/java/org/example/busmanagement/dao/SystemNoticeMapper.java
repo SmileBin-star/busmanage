@@ -32,7 +32,10 @@ public interface SystemNoticeMapper {
 
     // 查询最新通知（限制条数）
     List<SystemNotice> selectLatest(@Param("limit") Integer limit);
+<<<<<<< HEAD
 
     // 删除通知
     int deleteById(Integer noticeId);
+=======
+>>>>>>> 51be8eca486a0b89e7c55378a404bddf93d74dc1
 }

@@ -36,6 +36,7 @@
     $.get(ctx+'/station/list',r=>{
         let html='';
         r.data.list.forEach(s=>{
+<<<<<<< HEAD
             html+='<tr>' +
                 '<td>'+s.stationId+'</td>' +
                 '<td>'+s.stationName+'</td>' +
@@ -63,6 +64,14 @@
             });
         }
     }
+=======
+            html+=`<tr><td>${s.stationId}</td><td>${s.stationName}</td><td>${s.address}</td>
+                <td>${s.status===1?'<span class="badge bg-success">启用</span>':'<span class="badge bg-secondary">关闭</span>'}</td>
+                <td><a href="${ctx}/station/edit/${s.stationId}" class="btn btn-sm btn-warning">编辑</a></td></tr>`;
+        });
+        $('#tb').html(html);
+    });
+>>>>>>> 51be8eca486a0b89e7c55378a404bddf93d74dc1
 </script>
 </body>
 </html>

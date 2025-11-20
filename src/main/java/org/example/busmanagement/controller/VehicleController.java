@@ -8,11 +8,16 @@ import org.example.busmanagement.service.VehicleService;
 import jakarta.annotation.Resource;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
+<<<<<<< HEAD
 import org.springframework.web.bind.WebDataBinder;
 import org.springframework.web.bind.annotation.*;
 
 import java.text.SimpleDateFormat;
 import java.util.Date;
+=======
+import org.springframework.web.bind.annotation.*;
+
+>>>>>>> 51be8eca486a0b89e7c55378a404bddf93d74dc1
 import java.util.List;
 
 @Controller
@@ -22,6 +27,7 @@ public class VehicleController {
     @Resource
     private VehicleService vehicleService;
 
+<<<<<<< HEAD
     // 初始化数据绑定，处理日期格式和空值
     @InitBinder
     public void initBinder(WebDataBinder binder) {
@@ -48,6 +54,17 @@ public class VehicleController {
         } catch (Exception e) {
             return Result.error("系统异常：" + e.getMessage());
         }
+=======
+    // 车辆管理页面（管理员）
+    @GetMapping("/manage")
+    public String manage(
+            @RequestParam(defaultValue = "1") int pageNum,
+            @RequestParam(defaultValue = "10") int pageSize,
+            Model model) {
+        PageResult<BusVehicle> pageResult = vehicleService.getVehiclePage(pageNum, pageSize);
+        model.addAttribute("pageResult", pageResult);
+        return "admin/vehicle_manage"; // 需创建对应的JSP页面
+>>>>>>> 51be8eca486a0b89e7c55378a404bddf93d74dc1
     }
 
     // 车辆详情页面
@@ -65,7 +82,11 @@ public class VehicleController {
     // 添加车辆页面
     @GetMapping("/add")
     public String addPage() {
+<<<<<<< HEAD
         return "vehicle/add";
+=======
+        return "admin/vehicle_add"; // 需创建对应的JSP页面
+>>>>>>> 51be8eca486a0b89e7c55378a404bddf93d74dc1
     }
 
     // 提交添加车辆
@@ -73,9 +94,12 @@ public class VehicleController {
     @ResponseBody
     public Result addVehicle(BusVehicle vehicle) {
         try {
+<<<<<<< HEAD
             // 处理空值：如果 purchaseTime 为空字符串，设置为 null
             // Spring 会自动处理，但如果前端提交空字符串，需要手动处理
             // 这里通过 @InitBinder 或直接处理都可以，但更简单的是在前端不提交空字段
+=======
+>>>>>>> 51be8eca486a0b89e7c55378a404bddf93d74dc1
             boolean success = vehicleService.addVehicle(vehicle);
             return success ? Result.success("车辆添加成功") : Result.error("车辆添加失败");
         } catch (BusinessException e) {
@@ -94,7 +118,11 @@ public class VehicleController {
             return "common/error";
         }
         model.addAttribute("vehicle", vehicle);
+<<<<<<< HEAD
         return "vehicle/edit";
+=======
+        return "admin/vehicle_edit"; // 需创建对应的JSP页面
+>>>>>>> 51be8eca486a0b89e7c55378a404bddf93d74dc1
     }
 
     // 提交编辑车辆
@@ -137,6 +165,7 @@ public class VehicleController {
             return Result.error(e.getMessage());
         }
     }
+<<<<<<< HEAD
 
     // 删除车辆
     @PostMapping("/delete/{vehicleId}")
@@ -151,4 +180,6 @@ public class VehicleController {
             return Result.error("系统异常：" + e.getMessage());
         }
     }
+=======
+>>>>>>> 51be8eca486a0b89e7c55378a404bddf93d74dc1
 }

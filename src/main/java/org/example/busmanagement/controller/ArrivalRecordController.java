@@ -3,6 +3,7 @@ package org.example.busmanagement.controller;
 import org.example.busmanagement.exception.BusinessException;
 import org.example.busmanagement.model.entity.BusArrivalRecord;
 import org.example.busmanagement.model.vo.Result;
+<<<<<<< HEAD
 import org.example.busmanagement.model.vo.PageResult;
 import org.example.busmanagement.service.ArrivalRecordService;
 import jakarta.annotation.Resource;
@@ -15,12 +16,23 @@ import java.time.LocalDateTime;
 import java.util.List;
 
 @Controller
+=======
+import org.example.busmanagement.service.ArrivalRecordService;
+import jakarta.annotation.Resource;
+import org.springframework.format.annotation.DateTimeFormat;
+import org.springframework.web.bind.annotation.*;
+import java.time.LocalDateTime;
+import java.util.List;
+
+@RestController
+>>>>>>> 51be8eca486a0b89e7c55378a404bddf93d74dc1
 @RequestMapping("/arrivalRecord")
 public class ArrivalRecordController {
 
     @Resource
     private ArrivalRecordService arrivalRecordService;
 
+<<<<<<< HEAD
     // 初始化数据绑定，处理日期时间格式
     @InitBinder
     public void initBinder(WebDataBinder binder) {
@@ -59,6 +71,10 @@ public class ArrivalRecordController {
     // 新增到站记录（车辆到达时调用）
     @PostMapping("/add")
     @ResponseBody
+=======
+    // 新增到站记录（车辆到达时调用）
+    @PostMapping("/add")
+>>>>>>> 51be8eca486a0b89e7c55378a404bddf93d74dc1
     public Result addRecord(@RequestBody BusArrivalRecord record) {
         try {
             boolean success = arrivalRecordService.addArrivalRecord(record);
@@ -70,6 +86,7 @@ public class ArrivalRecordController {
         }
     }
 
+<<<<<<< HEAD
     // 删除到站记录
     @PostMapping("/delete/{recordId}")
     @ResponseBody
@@ -87,6 +104,10 @@ public class ArrivalRecordController {
     // 更新出发时间（车辆离开时调用）
     @PostMapping("/updateDeparture")
     @ResponseBody
+=======
+    // 更新出发时间（车辆离开时调用）
+    @PostMapping("/updateDeparture")
+>>>>>>> 51be8eca486a0b89e7c55378a404bddf93d74dc1
     public Result updateDeparture(
             @RequestParam Integer recordId,
             @RequestParam @DateTimeFormat(iso = DateTimeFormat.ISO.DATE_TIME) LocalDateTime departureTime) {
@@ -100,7 +121,10 @@ public class ArrivalRecordController {
 
     // 更新上下车人数
     @PostMapping("/updatePassengers")
+<<<<<<< HEAD
     @ResponseBody
+=======
+>>>>>>> 51be8eca486a0b89e7c55378a404bddf93d74dc1
     public Result updatePassengers(
             @RequestParam Integer recordId,
             @RequestParam(required = false) Integer passengerIn,
@@ -115,7 +139,10 @@ public class ArrivalRecordController {
 
     // 根据班次ID查询记录
     @GetMapping("/bySchedule/{scheduleId}")
+<<<<<<< HEAD
     @ResponseBody
+=======
+>>>>>>> 51be8eca486a0b89e7c55378a404bddf93d74dc1
     public Result getBySchedule(@PathVariable Integer scheduleId) {
         try {
             List<BusArrivalRecord> records = arrivalRecordService.getByScheduleId(scheduleId);
@@ -125,6 +152,7 @@ public class ArrivalRecordController {
         }
     }
 
+<<<<<<< HEAD
     // 最近到站页面
     @GetMapping("/latest")
     public String latestPage() {
@@ -134,6 +162,10 @@ public class ArrivalRecordController {
     // 查询站点最新到站记录（API）
     @GetMapping("/latest/{stationId}")
     @ResponseBody
+=======
+    // 查询站点最新到站记录
+    @GetMapping("/latest/{stationId}")
+>>>>>>> 51be8eca486a0b89e7c55378a404bddf93d74dc1
     public Result getLatest(
             @PathVariable Integer stationId,
             @RequestParam(required = false) Integer limit) {
@@ -144,6 +176,7 @@ public class ArrivalRecordController {
             return Result.error(e.getMessage());
         }
     }
+<<<<<<< HEAD
 
     // 查询所有最新到站记录（API，用于最近到站页面）
     @GetMapping("/latest/all")
@@ -159,4 +192,6 @@ public class ArrivalRecordController {
             return Result.error("系统异常：" + e.getMessage());
         }
     }
+=======
+>>>>>>> 51be8eca486a0b89e7c55378a404bddf93d74dc1
 }

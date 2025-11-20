@@ -1,8 +1,11 @@
 <%@ page contentType="text/html;charset=UTF-8" %>
 <%
     String ctx = request.getContextPath();
+<<<<<<< HEAD
     org.example.busmanagement.model.entity.User loginUser = (org.example.busmanagement.model.entity.User) session.getAttribute("loginUser");
     Integer userId = loginUser != null ? loginUser.getUserId() : null;
+=======
+>>>>>>> 51be8eca486a0b89e7c55378a404bddf93d74dc1
 %>
 <!doctype html>
 <html>
@@ -18,6 +21,7 @@
 </nav>
 <div class="container mt-3">
     <div class="card">
+<<<<<<< HEAD
         <div class="card-header">登录记录</div>
         <div class="card-body p-0">
             <table class="table table-hover mb-0">
@@ -37,11 +41,21 @@
                 <ul class="pagination mb-0" id="pagination"></ul>
             </nav>
         </div>
+=======
+        <div class="card-header">最近 30 条记录</div>
+        <table class="table table-hover mb-0">
+            <thead class="table-light">
+            <tr><th>登录时间</th><th>IP</th><th>状态</th><th>登出时间</th></tr>
+            </thead>
+            <tbody id="tb"></tbody>
+        </table>
+>>>>>>> 51be8eca486a0b89e7c55378a404bddf93d74dc1
     </div>
 </div>
 <script src="<%=ctx%>/static/js/jquery-3.6.0.min.js"></script>
 <script>
     const ctx='<%=ctx%>';
+<<<<<<< HEAD
     const userId = <%=userId != null ? userId : "null"%>;
     let currentPage = 1;
     const pageSize = 10;
@@ -129,6 +143,19 @@
 
     // 初始加载
     loadList(1);
+=======
+    $.get(ctx+'/user/loginLogs',r=>{
+        let html='';
+        r.data.list.forEach(l=>{
+            html+=`<tr>
+                <td>${l.loginTime}</td><td>${l.loginIp}</td>
+                <td>${l.loginStatus===1?'<span class="badge bg-success">成功</span>':'<span class="badge bg-danger">失败</span>'}</td>
+                <td>${l.logoutTime||'未登出'}</td>
+            </tr>`;
+        });
+        $('#tb').html(html);
+    });
+>>>>>>> 51be8eca486a0b89e7c55378a404bddf93d74dc1
 </script>
 </body>
 </html>

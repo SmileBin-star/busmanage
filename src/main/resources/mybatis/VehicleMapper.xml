@@ -61,9 +61,12 @@
     <select id="countByLicensePlate" resultType="int">
         SELECT COUNT(*) FROM bus_vehicles WHERE license_plate = #{licensePlate}
     </select>
+<<<<<<< HEAD
 
     <!-- 删除车辆 -->
     <delete id="deleteById">
         DELETE FROM bus_vehicles WHERE vehicle_id = #{vehicleId}
     </delete>
+=======
+>>>>>>> 51be8eca486a0b89e7c55378a404bddf93d74dc1
 </mapper>

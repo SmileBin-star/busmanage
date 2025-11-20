@@ -9,5 +9,8 @@ public interface RouteService {
     boolean addRoute(BusRoute route, Integer[] stationIds);
     boolean updateRoute(BusRoute route);
     boolean changeStatus(Integer routeId, Integer status);
+<<<<<<< HEAD
     boolean deleteRoute(Integer routeId);
+=======
+>>>>>>> 51be8eca486a0b89e7c55378a404bddf93d74dc1
 }

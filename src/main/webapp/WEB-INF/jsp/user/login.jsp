@@ -39,9 +39,13 @@
             console.log('res.data 类型：', typeof res.data);
             console.log('res.data 值：', res.data);
             if(res.code===200){
+<<<<<<< HEAD
                 // 确保 res.data 存在，如果不存在则使用默认路径
                 const redirectPath = res.data || '/user/index';
                 location.href = '<%=ctx%>' + redirectPath;   // 前端拼接context-path
+=======
+                location.href = res.data;   // 后端已经带 /bus，不再拼 ctx
+>>>>>>> 51be8eca486a0b89e7c55378a404bddf93d74dc1
             }else{
                 $('#msg').text(res.msg||'登录失败');
             }

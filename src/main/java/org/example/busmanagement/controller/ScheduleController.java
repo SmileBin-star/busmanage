@@ -21,6 +21,7 @@ public class ScheduleController {
 
     // 调度列表页面
     @GetMapping("/manage")
+<<<<<<< HEAD
     public String manage() {
         // 页面通过 AJAX 加载数据，这里不需要设置 Model
         return "schedule/manage";
@@ -40,12 +41,29 @@ public class ScheduleController {
         } catch (Exception e) {
             return Result.error("系统异常：" + e.getMessage());
         }
+=======
+    public String manage(
+            @RequestParam(defaultValue = "1") int pageNum,
+            @RequestParam(defaultValue = "10") int pageSize,
+            @RequestParam(required = false) Integer routeId,
+            @RequestParam(required = false) Integer status,
+            Model model) {
+        PageResult<BusSchedule> pageResult = scheduleService.getSchedulePage(pageNum, pageSize, routeId, status);
+        model.addAttribute("pageResult", pageResult);
+        model.addAttribute("routeId", routeId);
+        model.addAttribute("status", status);
+        return "admin/schedule_manage";
+>>>>>>> 51be8eca486a0b89e7c55378a404bddf93d74dc1
     }
 
     // 添加调度页面
     @GetMapping("/add")
     public String addPage() {
+<<<<<<< HEAD
         return "schedule/add";
+=======
+        return "admin/schedule_add";
+>>>>>>> 51be8eca486a0b89e7c55378a404bddf93d74dc1
     }
 
     // 提交添加调度
@@ -71,7 +89,11 @@ public class ScheduleController {
             return "common/error";
         }
         model.addAttribute("schedule", schedule);
+<<<<<<< HEAD
         return "schedule/edit";
+=======
+        return "admin/schedule_edit";
+>>>>>>> 51be8eca486a0b89e7c55378a404bddf93d74dc1
     }
 
     // 提交编辑调度
@@ -127,6 +149,7 @@ public class ScheduleController {
             return Result.error(e.getMessage());
         }
     }
+<<<<<<< HEAD
 
     // 删除调度
     @PostMapping("/delete/{scheduleId}")
@@ -141,4 +164,6 @@ public class ScheduleController {
             return Result.error("系统异常：" + e.getMessage());
         }
     }
+=======
+>>>>>>> 51be8eca486a0b89e7c55378a404bddf93d74dc1
 }

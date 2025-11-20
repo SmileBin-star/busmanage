@@ -1,8 +1,11 @@
 <%@ page contentType="text/html;charset=UTF-8" %>
 <%
     String ctx = request.getContextPath();
+<<<<<<< HEAD
     org.example.busmanagement.model.entity.User loginUser = (org.example.busmanagement.model.entity.User) session.getAttribute("loginUser");
     boolean isAdmin = loginUser != null && loginUser.getRoleType() != null && loginUser.getRoleType() == 2;
+=======
+>>>>>>> 51be8eca486a0b89e7c55378a404bddf93d74dc1
 %>
 <!doctype html>
 <html>
@@ -18,6 +21,7 @@
 </nav>
 <div class="container mt-3">
     <div class="card">
+<<<<<<< HEAD
         <div class="card-header d-flex justify-content-between align-items-center">
             <span>通知列表</span>
             <div class="d-flex align-items-center">
@@ -30,10 +34,16 @@
                 <a href="<%=ctx%>/systemNotice/add" class="btn btn-sm btn-success me-2">发布通知</a>
                 <% } %>
             </div>
+=======
+        <div class="card-header d-flex justify-content-between">
+            <span>通知列表</span>
+            <a href="<%=ctx%>/systemNotice/add" class="btn btn-sm btn-success">发布通知</a>
+>>>>>>> 51be8eca486a0b89e7c55378a404bddf93d74dc1
         </div>
         <div class="card-body p-0">
             <table class="table table-hover mb-0">
                 <thead class="table-light">
+<<<<<<< HEAD
                 <tr>
                     <th>ID</th>
                     <th>标题</th>
@@ -43,10 +53,14 @@
                     <th>状态</th>
                     <th>操作</th>
                 </tr>
+=======
+                <tr><th>标题</th><th>发布时间</th><th>阅读数</th><th>状态</th></tr>
+>>>>>>> 51be8eca486a0b89e7c55378a404bddf93d74dc1
                 </thead>
                 <tbody id="tb"></tbody>
             </table>
         </div>
+<<<<<<< HEAD
         <div class="card-footer">
             <nav>
                 <ul class="pagination mb-0" id="pagination"></ul>
@@ -262,6 +276,24 @@
 
     // 初始加载
     loadList(1);
+=======
+    </div>
+</div>
+<script src="<%=ctx%>/static/js/jquery-3.6.0.min.js"></script>
+<script>
+    const ctx='<%=ctx%>';
+    $.get(ctx+'/systemNotice/page',r=>{
+        let html='';
+        r.data.list.forEach(n=>{
+            html+=`<tr>
+                <td><a href="${ctx}/systemNotice/detail/${n.noticeId}" target="_blank">${n.title}</a></td>
+                <td>${n.publishTime}</td><td>${n.readCount}</td>
+                <td>${n.status===1?'<span class="badge bg-success">发布中</span>':'<span class="badge bg-secondary">已下架</span>'}</td>
+            </tr>`;
+        });
+        $('#tb').html(html);
+    });
+>>>>>>> 51be8eca486a0b89e7c55378a404bddf93d74dc1
 </script>
 </body>
 </html>

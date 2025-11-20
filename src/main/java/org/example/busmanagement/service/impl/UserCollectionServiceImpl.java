@@ -3,7 +3,10 @@ package org.example.busmanagement.service.impl;
 import org.example.busmanagement.dao.UserCollectionMapper;
 import org.example.busmanagement.exception.BusinessException;
 import org.example.busmanagement.model.entity.UserCollection;
+<<<<<<< HEAD
 import org.example.busmanagement.model.vo.PageResult;
+=======
+>>>>>>> 51be8eca486a0b89e7c55378a404bddf93d74dc1
 import org.example.busmanagement.service.UserCollectionService;
 import jakarta.annotation.Resource;
 import org.springframework.stereotype.Service;
@@ -65,6 +68,7 @@ public class UserCollectionServiceImpl implements UserCollectionService {
         UserCollection collection = userCollectionMapper.selectByUserAndTarget(userId, collectionType, targetId);
         return collection != null;
     }
+<<<<<<< HEAD
 
     @Override
     public PageResult<UserCollection> getUserCollectionsPage(Integer userId, Integer collectionType, int pageNum, int pageSize) {
@@ -84,4 +88,6 @@ public class UserCollectionServiceImpl implements UserCollectionService {
         }
         return userCollectionMapper.deleteById(collectionId) > 0;
     }
+=======
+>>>>>>> 51be8eca486a0b89e7c55378a404bddf93d74dc1
 }

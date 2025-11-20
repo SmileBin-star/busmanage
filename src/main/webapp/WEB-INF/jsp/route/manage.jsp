@@ -38,6 +38,7 @@
     $.get(ctx+'/route/list', r=>{
         let html='';
         r.data.list.forEach(o=>{
+<<<<<<< HEAD
             html+='<tr>' +
                 '<td>'+o.routeId+'</td>' +
                 '<td>'+o.routeName+'</td>' +
@@ -66,6 +67,19 @@
             });
         }
     }
+=======
+            html+=`<tr>
+                <td>${o.routeId}</td><td>${o.routeName}</td><td>${o.startStationName}</td>
+                <td>${o.endStationName}</td>
+                <td>${o.status===1?'<span class="badge bg-success">运营</span>':'<span class="badge bg-secondary">停运</span>'}</td>
+                <td>
+                    <a href="${ctx}/route/edit/${o.routeId}" class="btn btn-sm btn-warning">编辑</a>
+                    <a href="${ctx}/route/editStations/${o.routeId}" class="btn btn-sm btn-info">站点</a>
+                </td></tr>`;
+        });
+        $('#tb').html(html);
+    });
+>>>>>>> 51be8eca486a0b89e7c55378a404bddf93d74dc1
 </script>
 </body>
 </html>

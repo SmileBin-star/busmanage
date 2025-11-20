@@ -38,6 +38,7 @@
         WHERE notice_id = #{noticeId}
     </update>
 
+<<<<<<< HEAD
     <!-- 根据ID查询（关联查询发布者名称） -->
     <select id="selectById" resultType="org.example.busmanagement.model.entity.SystemNotice">
         SELECT 
@@ -59,6 +60,21 @@
             <if test="status != null">AND n.status = #{status}</if>
         </where>
         ORDER BY n.publish_time DESC
+=======
+    <!-- 根据ID查询 -->
+    <select id="selectById" resultType="org.example.busmanagement.model.entity.SystemNotice">
+        SELECT * FROM system_notices
+        WHERE notice_id = #{noticeId}
+    </select>
+
+    <!-- 分页查询 -->
+    <select id="selectPage" resultType="org.example.busmanagement.model.entity.SystemNotice">
+        SELECT * FROM system_notices
+        <where>
+            <if test="status != null">AND status = #{status}</if>
+        </where>
+        ORDER BY publish_time DESC
+>>>>>>> 51be8eca486a0b89e7c55378a404bddf93d74dc1
         LIMIT #{pageNum}, #{pageSize}
     </select>
 
@@ -70,6 +86,7 @@
         </where>
     </select>
 
+<<<<<<< HEAD
     <!-- 查询最新通知（关联查询发布者名称） -->
     <select id="selectLatest" resultType="org.example.busmanagement.model.entity.SystemNotice">
         SELECT 
@@ -86,4 +103,13 @@
     <delete id="deleteById">
         DELETE FROM system_notices WHERE notice_id = #{noticeId}
     </delete>
+=======
+    <!-- 查询最新通知 -->
+    <select id="selectLatest" resultType="org.example.busmanagement.model.entity.SystemNotice">
+        SELECT * FROM system_notices
+        WHERE status = 1
+        ORDER BY publish_time DESC
+        LIMIT #{limit}
+    </select>
+>>>>>>> 51be8eca486a0b89e7c55378a404bddf93d74dc1
 </mapper>

@@ -3,6 +3,7 @@ package org.example.busmanagement.service.impl;
 import org.example.busmanagement.dao.ArrivalRecordMapper;
 import org.example.busmanagement.exception.BusinessException;
 import org.example.busmanagement.model.entity.BusArrivalRecord;
+<<<<<<< HEAD
 import org.example.busmanagement.model.entity.BusVehicle;
 import org.example.busmanagement.model.entity.BusStation;
 import org.example.busmanagement.model.entity.BusSchedule;
@@ -11,6 +12,9 @@ import org.example.busmanagement.service.ArrivalRecordService;
 import org.example.busmanagement.service.VehicleService;
 import org.example.busmanagement.service.StationService;
 import org.example.busmanagement.service.ScheduleService;
+=======
+import org.example.busmanagement.service.ArrivalRecordService;
+>>>>>>> 51be8eca486a0b89e7c55378a404bddf93d74dc1
 import jakarta.annotation.Resource;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -23,6 +27,7 @@ public class ArrivalRecordServiceImpl implements ArrivalRecordService {
     @Resource
     private ArrivalRecordMapper arrivalRecordMapper;
 
+<<<<<<< HEAD
     @Resource
     private VehicleService vehicleService;
 
@@ -32,10 +37,13 @@ public class ArrivalRecordServiceImpl implements ArrivalRecordService {
     @Resource
     private ScheduleService scheduleService;
 
+=======
+>>>>>>> 51be8eca486a0b89e7c55378a404bddf93d74dc1
     @Override
     @Transactional(rollbackFor = Exception.class)
     public boolean addArrivalRecord(BusArrivalRecord record) {
         // 校验必填字段
+<<<<<<< HEAD
         if (record.getVehicleId() == null) {
             throw new BusinessException("车辆ID不能为空");
         }
@@ -83,6 +91,12 @@ public class ArrivalRecordServiceImpl implements ArrivalRecordService {
             record.setPassengerOut(0);
         }
 
+=======
+        if (record.getVehicleId() == null || record.getStationId() == null
+                || record.getScheduleId() == null || record.getActualArrivalTime() == null) {
+            throw new BusinessException("车辆ID、站点ID、班次ID和到达时间不能为空");
+        }
+>>>>>>> 51be8eca486a0b89e7c55378a404bddf93d74dc1
         return arrivalRecordMapper.insert(record) > 0;
     }
 
@@ -144,6 +158,7 @@ public class ArrivalRecordServiceImpl implements ArrivalRecordService {
         }
         return arrivalRecordMapper.selectById(recordId);
     }
+<<<<<<< HEAD
 
     @Override
     public PageResult<BusArrivalRecord> getRecordPage(int pageNum, int pageSize, Integer scheduleId, Integer stationId) {
@@ -167,4 +182,6 @@ public class ArrivalRecordServiceImpl implements ArrivalRecordService {
 
         return arrivalRecordMapper.deleteById(recordId) > 0;
     }
+=======
+>>>>>>> 51be8eca486a0b89e7c55378a404bddf93d74dc1
 }

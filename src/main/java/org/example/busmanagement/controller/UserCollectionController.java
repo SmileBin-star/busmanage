@@ -3,6 +3,7 @@ package org.example.busmanagement.controller;
 import org.example.busmanagement.exception.BusinessException;
 import org.example.busmanagement.model.entity.UserCollection;
 import org.example.busmanagement.model.vo.Result;
+<<<<<<< HEAD
 import org.example.busmanagement.model.vo.PageResult;
 import org.example.busmanagement.service.UserCollectionService;
 import jakarta.annotation.Resource;
@@ -11,6 +12,14 @@ import org.springframework.web.bind.annotation.*;
 import java.util.List;
 
 @Controller
+=======
+import org.example.busmanagement.service.UserCollectionService;
+import jakarta.annotation.Resource;
+import org.springframework.web.bind.annotation.*;
+import java.util.List;
+
+@RestController
+>>>>>>> 51be8eca486a0b89e7c55378a404bddf93d74dc1
 @RequestMapping("/collection")
 public class UserCollectionController {
 
@@ -18,7 +27,10 @@ public class UserCollectionController {
     private UserCollectionService userCollectionService;
 
     @PostMapping("/add")
+<<<<<<< HEAD
     @ResponseBody
+=======
+>>>>>>> 51be8eca486a0b89e7c55378a404bddf93d74dc1
     public Result addCollection(
             @RequestParam Integer userId,
             @RequestParam Integer type,
@@ -34,7 +46,10 @@ public class UserCollectionController {
     }
 
     @PostMapping("/cancel")
+<<<<<<< HEAD
     @ResponseBody
+=======
+>>>>>>> 51be8eca486a0b89e7c55378a404bddf93d74dc1
     public Result cancelCollection(
             @RequestParam Integer userId,
             @RequestParam Integer type,
@@ -49,6 +64,7 @@ public class UserCollectionController {
         }
     }
 
+<<<<<<< HEAD
     // 我的收藏页面（管理页面）
     @GetMapping("/manage")
     public String manage() {
@@ -86,6 +102,12 @@ public class UserCollectionController {
      */
     @GetMapping("/listAll")
     @ResponseBody
+=======
+    /**
+     * 查询用户收藏列表
+     */
+    @GetMapping("/list")
+>>>>>>> 51be8eca486a0b89e7c55378a404bddf93d74dc1
     public Result getUserCollections(
             @RequestParam Integer userId,
             @RequestParam(required = false) Integer type) {
@@ -100,6 +122,7 @@ public class UserCollectionController {
     }
 
     /**
+<<<<<<< HEAD
      * 按ID删除收藏
      */
     @PostMapping("/delete/{collectionId}")
@@ -120,6 +143,11 @@ public class UserCollectionController {
      */
     @GetMapping("/check")
     @ResponseBody
+=======
+     * 检查是否已收藏
+     */
+    @GetMapping("/check")
+>>>>>>> 51be8eca486a0b89e7c55378a404bddf93d74dc1
     public Result checkCollection(
             @RequestParam Integer userId,
             @RequestParam Integer type,

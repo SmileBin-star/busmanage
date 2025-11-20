@@ -1,15 +1,23 @@
 package org.example.busmanagement.exception;
 
+<<<<<<< HEAD
 import jakarta.servlet.http.HttpServletRequest;
 import org.example.busmanagement.model.vo.Result;
 import org.springframework.web.bind.annotation.ControllerAdvice;
 import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.servlet.ModelAndView;
+=======
+import org.example.busmanagement.model.vo.Result;
+import org.springframework.web.bind.annotation.ControllerAdvice;
+import org.springframework.web.bind.annotation.ExceptionHandler;
+import org.springframework.web.bind.annotation.ResponseBody;
+>>>>>>> 51be8eca486a0b89e7c55378a404bddf93d74dc1
 
 @ControllerAdvice
 public class GlobalExceptionHandler {
 
     @ExceptionHandler(Exception.class)
+<<<<<<< HEAD
     public Object handleException(Exception e, HttpServletRequest request) {
         e.printStackTrace();
         // 判断是否是 AJAX 请求或 API 请求
@@ -46,5 +54,17 @@ public class GlobalExceptionHandler {
             mv.addObject("error", e.getMessage());
             return mv;
         }
+=======
+    @ResponseBody
+    public Result handleException(Exception e) {
+        e.printStackTrace();
+        return Result.error("系统异常：" + e.getMessage());
+    }
+
+    @ExceptionHandler(BusinessException.class)
+    @ResponseBody
+    public Result handleBusinessException(BusinessException e) {
+        return Result.error(e.getMessage());
+>>>>>>> 51be8eca486a0b89e7c55378a404bddf93d74dc1
     }
 }

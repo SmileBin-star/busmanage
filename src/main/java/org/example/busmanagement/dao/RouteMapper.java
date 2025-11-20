@@ -13,8 +13,11 @@ public interface RouteMapper {
     int insert(BusRoute route);
     int update(BusRoute route);
     int updateStatus(@Param("routeId") Integer routeId, @Param("status") Integer status);
+<<<<<<< HEAD
     int deleteById(Integer routeId);
     
     // 根据线路名称查询（用于检查唯一性）
     BusRoute selectByRouteName(@Param("routeName") String routeName);
+=======
+>>>>>>> 51be8eca486a0b89e7c55378a404bddf93d74dc1
 }

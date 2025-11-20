@@ -1,7 +1,10 @@
 package org.example.busmanagement.model.entity;
 
 import lombok.Data;
+<<<<<<< HEAD
 import jakarta.persistence.Transient;
+=======
+>>>>>>> 51be8eca486a0b89e7c55378a404bddf93d74dc1
 import java.time.LocalDateTime;
 
 @Data
@@ -15,10 +18,13 @@ public class BusArrivalRecord {
     private Integer delayMinutes;         // 延误分钟数（默认0）
     private Integer passengerIn;          // 上车人数（默认0）
     private Integer passengerOut;         // 下车人数（默认0）
+<<<<<<< HEAD
 
     // 关联字段（非数据库字段，用于关联查询）
     @Transient
     private String stationName;           // 站点名称
     @Transient
     private String licensePlate;          // 车牌号
+=======
+>>>>>>> 51be8eca486a0b89e7c55378a404bddf93d74dc1
 }

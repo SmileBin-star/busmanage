@@ -73,6 +73,7 @@
         ORDER BY actual_arrival_time DESC
         LIMIT #{limit}
     </select>
+<<<<<<< HEAD
 
     <!-- 分页查询到站记录（关联查询站点和车辆信息） -->
     <select id="selectPage" resultType="org.example.busmanagement.model.entity.BusArrivalRecord">
@@ -112,4 +113,6 @@
     <delete id="deleteById">
         DELETE FROM bus_arrival_records WHERE record_id = #{recordId}
     </delete>
+=======
+>>>>>>> 51be8eca486a0b89e7c55378a404bddf93d74dc1
 </mapper>

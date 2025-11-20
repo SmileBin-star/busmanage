@@ -32,7 +32,10 @@ public interface StationMapper {
 
     // 根据名称模糊查询站点
     List<BusStation> selectByNameLike(@Param("name") String name);
+<<<<<<< HEAD
 
     // 删除站点
     int deleteById(Integer stationId);
+=======
+>>>>>>> 51be8eca486a0b89e7c55378a404bddf93d74dc1
 }

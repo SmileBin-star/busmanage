@@ -29,7 +29,10 @@ public interface VehicleMapper {
 
     // 检查车牌号是否已存在
     int countByLicensePlate(String licensePlate);
+<<<<<<< HEAD
 
     // 删除车辆
     int deleteById(Integer vehicleId);
+=======
+>>>>>>> 51be8eca486a0b89e7c55378a404bddf93d74dc1
 }

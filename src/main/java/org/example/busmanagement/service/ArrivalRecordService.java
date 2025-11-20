@@ -1,7 +1,10 @@
 package org.example.busmanagement.service;
 
 import org.example.busmanagement.model.entity.BusArrivalRecord;
+<<<<<<< HEAD
 import org.example.busmanagement.model.vo.PageResult;
+=======
+>>>>>>> 51be8eca486a0b89e7c55378a404bddf93d74dc1
 
 import java.time.LocalDateTime;
 import java.util.List;
@@ -28,10 +31,13 @@ public interface ArrivalRecordService {
 
     // 获取单条记录详情
     BusArrivalRecord getRecordById(Integer recordId);
+<<<<<<< HEAD
 
     // 分页查询到站记录
     PageResult<BusArrivalRecord> getRecordPage(int pageNum, int pageSize, Integer scheduleId, Integer stationId);
 
     // 删除到站记录
     boolean deleteRecord(Integer recordId);
+=======
+>>>>>>> 51be8eca486a0b89e7c55378a404bddf93d74dc1
 }

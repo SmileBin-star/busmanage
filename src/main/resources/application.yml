@@ -3,7 +3,11 @@ spring:
     driver-class-name: com.mysql.cj.jdbc.Driver
     url: jdbc:mysql://localhost:3306/bus_management?useUnicode=true&characterEncoding=utf8&serverTimezone=GMT%2B8&allowPublicKeyRetrieval=true&useSSL=false
     username: root
+<<<<<<< HEAD
     password: 12345
+=======
+    password: mysql
+>>>>>>> 51be8eca486a0b89e7c55378a404bddf93d74dc1
   mvc:
     view:
       prefix: /WEB-INF/jsp/
@@ -26,6 +30,10 @@ mybatis:
 server:
   port: 8080
   servlet:
+<<<<<<< HEAD
     context-path: /
+=======
+    context-path: /bus
+>>>>>>> 51be8eca486a0b89e7c55378a404bddf93d74dc1
   tomcat:
     uri-encoding: UTF-8

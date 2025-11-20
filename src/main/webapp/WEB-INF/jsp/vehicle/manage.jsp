@@ -36,6 +36,7 @@
     $.get(ctx+'/vehicle/list',r=>{
         let html='';
         r.data.list.forEach(v=>{
+<<<<<<< HEAD
             html+='<tr>' +
                 '<td>'+v.vehicleId+'</td>' +
                 '<td>'+v.licensePlate+'</td>' +
@@ -63,6 +64,15 @@
             });
         }
     }
+=======
+            html+=`<tr><td>${v.vehicleId}</td><td>${v.licensePlate}</td>
+                <td>${v.vehicleType===1?'普通公交':'快速公交'}</td>
+                <td>${v.status===1?'<span class="badge bg-success">运营</span>':'<span class="badge bg-secondary">停用</span>'}</td>
+                <td><a href="${ctx}/vehicle/edit/${v.vehicleId}" class="btn btn-sm btn-warning">编辑</a></td></tr>`;
+        });
+        $('#tb').html(html);
+    });
+>>>>>>> 51be8eca486a0b89e7c55378a404bddf93d74dc1
 </script>
 </body>
 </html>

@@ -23,7 +23,10 @@ public interface VehicleService {
 
     // 更改车辆状态（运营/停用）
     boolean changeStatus(Integer vehicleId, Integer status);
+<<<<<<< HEAD
 
     // 删除车辆
     boolean deleteVehicle(Integer vehicleId);
+=======
+>>>>>>> 51be8eca486a0b89e7c55378a404bddf93d74dc1
 }

@@ -91,6 +91,7 @@
             <optional>true</optional>
         </dependency>
 
+<<<<<<< HEAD
         <!-- BCrypt密码加密 -->
         <dependency>
             <groupId>org.mindrot</groupId>
@@ -98,6 +99,8 @@
             <version>0.4</version>
         </dependency>
 
+=======
+>>>>>>> 51be8eca486a0b89e7c55378a404bddf93d74dc1
         <!-- 测试依赖 -->
         <dependency>
             <groupId>org.springframework.boot</groupId>

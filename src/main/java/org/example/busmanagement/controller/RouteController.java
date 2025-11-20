@@ -4,7 +4,10 @@ import org.example.busmanagement.exception.BusinessException;
 import org.example.busmanagement.model.entity.BusRoute;
 import org.example.busmanagement.model.entity.BusRouteStation;
 import org.example.busmanagement.model.entity.BusStation;
+<<<<<<< HEAD
 import org.example.busmanagement.model.vo.PageResult;
+=======
+>>>>>>> 51be8eca486a0b89e7c55378a404bddf93d74dc1
 import org.example.busmanagement.model.vo.Result;
 import org.example.busmanagement.service.RouteService;
 import org.example.busmanagement.service.RouteStationService;
@@ -26,6 +29,7 @@ public class RouteController {
     // 新增注入
     @Resource private RouteStationService routeStationService;
 
+<<<<<<< HEAD
     // 线路管理页面
     @GetMapping("/manage")
     public String manage(Model model) {
@@ -78,6 +82,8 @@ public class RouteController {
         }
     }
 
+=======
+>>>>>>> 51be8eca486a0b89e7c55378a404bddf93d74dc1
     // 新增：编辑线路站点关联页面
     @GetMapping("/editStations/{routeId}")
     public String editStationsPage(@PathVariable Integer routeId, Model model) {
@@ -94,6 +100,7 @@ public class RouteController {
         model.addAttribute("route", route);
         model.addAttribute("routeStations", routeStations);
         model.addAttribute("allStations", allStations);
+<<<<<<< HEAD
         return "route/editStations";
     }
 
@@ -102,6 +109,16 @@ public class RouteController {
     @ResponseBody
     public Result saveStations(
             @PathVariable Integer routeId,
+=======
+        return "admin/route_edit_stations";
+    }
+
+    // 新增：保存线路站点关联
+    @PostMapping("/saveStations")
+    @ResponseBody
+    public Result saveStations(
+            @RequestParam Integer routeId,
+>>>>>>> 51be8eca486a0b89e7c55378a404bddf93d74dc1
             @RequestBody List<BusRouteStation> routeStations) {
         try {
             // 补充线路ID到关联对象中
@@ -128,6 +145,7 @@ public class RouteController {
             return Result.error(e.getMessage());
         }
     }
+<<<<<<< HEAD
 
     // 编辑线路页面
     @GetMapping("/edit/{routeId}")
@@ -178,4 +196,6 @@ public class RouteController {
             return Result.error("系统异常：" + e.getMessage());
         }
     }
+=======
+>>>>>>> 51be8eca486a0b89e7c55378a404bddf93d74dc1
 }

@@ -18,6 +18,7 @@
     <div class="card p-3">
         <form id="form">
             <div class="mb-3"><label>线路名称</label><input name="routeName" class="form-control" required></div>
+<<<<<<< HEAD
             <div class="mb-3">
                 <label>起点站</label>
                 <select name="startStation" id="startStation" class="form-control" required>
@@ -30,6 +31,10 @@
                     <option value="">请选择终点站</option>
                 </select>
             </div>
+=======
+            <div class="mb-3"><label>起点站ID</label><input name="startStation" type="number" class="form-control" required></div>
+            <div class="mb-3"><label>终点站ID</label><input name="endStation" type="number" class="form-control" required></div>
+>>>>>>> 51be8eca486a0b89e7c55378a404bddf93d74dc1
             <div class="mb-3"><label>首班时间</label><input name="departureTime" type="time" class="form-control" required></div>
             <div class="mb-3"><label>末班时间</label><input name="arrivalTime" type="time" class="form-control" required></div>
             <button class="btn btn-primary">保存</button>
@@ -39,6 +44,7 @@
 <script src="<%=ctx%>/static/js/jquery-3.6.0.min.js"></script>
 <script>
     const ctx = '<%=ctx%>';
+<<<<<<< HEAD
     // 加载站点列表
     $.get(ctx+'/station/search', function(r){
         if(r.code===200 && r.data){
@@ -60,6 +66,12 @@
             }else{
                 alert(r.msg);
             }
+=======
+    $('#form').submit(function(){
+        $.post(ctx+'/route/add', $(this).serialize(), r=>{
+            if(r.code===200){location.href=ctx+'/route/manage';}
+            else{alert(r.msg);}
+>>>>>>> 51be8eca486a0b89e7c55378a404bddf93d74dc1
         });
         return false;
     });

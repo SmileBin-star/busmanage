@@ -2,25 +2,36 @@ package org.example.busmanagement.controller;
 
 import org.example.busmanagement.exception.BusinessException;
 import org.example.busmanagement.model.entity.SystemNotice;
+<<<<<<< HEAD
 import org.example.busmanagement.model.entity.User;
+=======
+>>>>>>> 51be8eca486a0b89e7c55378a404bddf93d74dc1
 import org.example.busmanagement.model.vo.Result;
 import org.example.busmanagement.model.vo.PageResult;
 import org.example.busmanagement.service.SystemNoticeService;
 import jakarta.annotation.Resource;
+<<<<<<< HEAD
 import jakarta.servlet.http.HttpServletRequest;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
+=======
+>>>>>>> 51be8eca486a0b89e7c55378a404bddf93d74dc1
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 
+<<<<<<< HEAD
 @Controller
+=======
+@RestController
+>>>>>>> 51be8eca486a0b89e7c55378a404bddf93d74dc1
 @RequestMapping("/systemNotice")
 public class SystemNoticeController {
 
     @Resource
     private SystemNoticeService systemNoticeService;
 
+<<<<<<< HEAD
     // 通知管理页面
     @GetMapping("/manage")
     public String manage() {
@@ -62,6 +73,12 @@ public class SystemNoticeController {
                     return Result.error("请先登录");
                 }
             }
+=======
+    // 发布通知（管理员）
+    @PostMapping("/add")
+    public Result addNotice(@RequestBody SystemNotice notice) {
+        try {
+>>>>>>> 51be8eca486a0b89e7c55378a404bddf93d74dc1
             boolean success = systemNoticeService.addNotice(notice);
             return success ? Result.success("通知发布成功") : Result.error("发布失败");
         } catch (BusinessException e) {
@@ -71,6 +88,7 @@ public class SystemNoticeController {
         }
     }
 
+<<<<<<< HEAD
     // 编辑通知页面
     @GetMapping("/edit/{noticeId}")
     public String editPage(@PathVariable Integer noticeId, Model model) {
@@ -87,6 +105,11 @@ public class SystemNoticeController {
     @PostMapping("/update")
     @ResponseBody
     public Result updateNotice(SystemNotice notice) {
+=======
+    // 编辑通知（管理员）
+    @PostMapping("/update")
+    public Result updateNotice(@RequestBody SystemNotice notice) {
+>>>>>>> 51be8eca486a0b89e7c55378a404bddf93d74dc1
         try {
             boolean success = systemNoticeService.updateNotice(notice);
             return success ? Result.success("通知更新成功") : Result.error("更新失败");
@@ -95,6 +118,7 @@ public class SystemNoticeController {
         }
     }
 
+<<<<<<< HEAD
     // 删除通知
     @PostMapping("/delete/{noticeId}")
     @ResponseBody
@@ -112,6 +136,10 @@ public class SystemNoticeController {
     // 更改通知状态（管理员）
     @PostMapping("/changeStatus")
     @ResponseBody
+=======
+    // 更改通知状态（管理员）
+    @PostMapping("/changeStatus")
+>>>>>>> 51be8eca486a0b89e7c55378a404bddf93d74dc1
     public Result changeStatus(
             @RequestParam Integer noticeId,
             @RequestParam Integer status) {
@@ -126,7 +154,10 @@ public class SystemNoticeController {
 
     // 获取通知详情（带阅读量递增）
     @GetMapping("/detail/{noticeId}")
+<<<<<<< HEAD
     @ResponseBody
+=======
+>>>>>>> 51be8eca486a0b89e7c55378a404bddf93d74dc1
     public Result getNoticeDetail(@PathVariable Integer noticeId) {
         try {
             // 阅读量+1
@@ -138,6 +169,7 @@ public class SystemNoticeController {
         }
     }
 
+<<<<<<< HEAD
     // 通知列表页面
     @GetMapping("/page")
     public String page() {
@@ -148,6 +180,11 @@ public class SystemNoticeController {
     @GetMapping("/api/list")
     @ResponseBody
     public Result getNoticePageApi(
+=======
+    // 分页查询通知列表
+    @GetMapping("/page")
+    public Result getNoticePage(
+>>>>>>> 51be8eca486a0b89e7c55378a404bddf93d74dc1
             @RequestParam(required = false) Integer status,
             @RequestParam(defaultValue = "1") int pageNum,
             @RequestParam(defaultValue = "10") int pageSize) {
@@ -161,7 +198,10 @@ public class SystemNoticeController {
 
     // 获取最新通知
     @GetMapping("/latest")
+<<<<<<< HEAD
     @ResponseBody
+=======
+>>>>>>> 51be8eca486a0b89e7c55378a404bddf93d74dc1
     public Result getLatestNotices(@RequestParam(required = false) Integer limit) {
         try {
             List<SystemNotice> notices = systemNoticeService.getLatestNotices(limit);

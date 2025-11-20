@@ -87,6 +87,7 @@ public class StationServiceImpl implements StationService {
         }
         return stationMapper.selectByNameLike(name.trim());
     }
+<<<<<<< HEAD
 
     @Override
     @Transactional(rollbackFor = Exception.class)
@@ -109,4 +110,6 @@ public class StationServiceImpl implements StationService {
 
         return stationMapper.deleteById(stationId) > 0;
     }
+=======
+>>>>>>> 51be8eca486a0b89e7c55378a404bddf93d74dc1
 }

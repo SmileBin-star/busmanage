@@ -68,6 +68,7 @@
     <update id="updateStatus">
         UPDATE bus_routes SET status = #{status} WHERE route_id = #{routeId}
     </update>
+<<<<<<< HEAD
 
     <delete id="deleteById">
         DELETE FROM bus_routes WHERE route_id = #{routeId}
@@ -77,4 +78,6 @@
     <select id="selectByRouteName" resultType="org.example.busmanagement.model.entity.BusRoute">
         SELECT * FROM bus_routes WHERE route_name = #{routeName} LIMIT 1
     </select>
+=======
+>>>>>>> 51be8eca486a0b89e7c55378a404bddf93d74dc1
 </mapper>

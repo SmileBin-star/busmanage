@@ -23,6 +23,7 @@ public class StationController {
     @Resource
     private RouteService routeService;
 
+<<<<<<< HEAD
     // 管理员站点管理页面（带操作按钮）
     @GetMapping("/manage")
     public String manage() {
@@ -47,6 +48,11 @@ public class StationController {
     // 站点列表页面（用户/管理员）- 保留原有功能
     @GetMapping("/listPage")
     public String listPage(
+=======
+    // 站点列表页面（用户/管理员）
+    @GetMapping("/list")
+    public String list(
+>>>>>>> 51be8eca486a0b89e7c55378a404bddf93d74dc1
             @RequestParam(defaultValue = "1") int pageNum,
             @RequestParam(defaultValue = "10") int pageSize,
             Model model) {
@@ -55,6 +61,20 @@ public class StationController {
         return "user/station_list"; // 用户端页面
     }
 
+<<<<<<< HEAD
+=======
+    // 管理员站点管理页面（带操作按钮）
+    @GetMapping("/manage")
+    public String manage(
+            @RequestParam(defaultValue = "1") int pageNum,
+            @RequestParam(defaultValue = "10") int pageSize,
+            Model model) {
+        PageResult<BusStation> pageResult = stationService.getStationPage(pageNum, pageSize);
+        model.addAttribute("pageResult", pageResult);
+        return "admin/station_manage"; // 管理员页面
+    }
+
+>>>>>>> 51be8eca486a0b89e7c55378a404bddf93d74dc1
     // 站点详情页面
     @GetMapping("/detail/{stationId}")
     public String detail(@PathVariable Integer stationId, Model model) {
@@ -73,7 +93,11 @@ public class StationController {
     // 添加站点页面（管理员）
     @GetMapping("/add")
     public String addPage() {
+<<<<<<< HEAD
         return "station/add";
+=======
+        return "admin/station_add";
+>>>>>>> 51be8eca486a0b89e7c55378a404bddf93d74dc1
     }
 
     // 提交添加站点
@@ -99,7 +123,11 @@ public class StationController {
             return "common/error";
         }
         model.addAttribute("station", station);
+<<<<<<< HEAD
         return "station/edit";
+=======
+        return "admin/station_edit";
+>>>>>>> 51be8eca486a0b89e7c55378a404bddf93d74dc1
     }
 
     // 提交编辑站点
@@ -138,6 +166,7 @@ public class StationController {
         List<BusStation> stations = stationService.searchStationsByName(name);
         return Result.success(stations);
     }
+<<<<<<< HEAD
 
     // 删除站点
     @PostMapping("/delete/{stationId}")
@@ -152,4 +181,6 @@ public class StationController {
             return Result.error("系统异常：" + e.getMessage());
         }
     }
+=======
+>>>>>>> 51be8eca486a0b89e7c55378a404bddf93d74dc1
 }

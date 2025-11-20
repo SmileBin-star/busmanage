@@ -36,6 +36,7 @@
     $.get(ctx+'/schedule/list',r=>{
         let html='';
         r.data.list.forEach(s=>{
+<<<<<<< HEAD
             let statusHtml = s.status===1?'<span class="badge bg-success">正常</span>':s.status===0?'<span class="badge bg-danger">取消</span>':'<span class="badge bg-secondary">完成</span>';
             html+='<tr>' +
                 '<td>'+s.scheduleId+'</td>' +
@@ -65,6 +66,15 @@
             });
         }
     }
+=======
+            html+=`<tr><td>${s.scheduleId}</td><td>${s.routeId}</td>
+                <td>${s.departureTime}</td><td>${s.arrivalTime}</td>
+                <td>${s.status===1?'<span class="badge bg-success">正常</span>':s.status===0?'<span class="badge bg-danger">取消</span>':'<span class="badge bg-secondary">完成</span>'}</td>
+                <td><a href="${ctx}/schedule/edit/${s.scheduleId}" class="btn btn-sm btn-warning">编辑</a></td></tr>`;
+        });
+        $('#tb').html(html);
+    });
+>>>>>>> 51be8eca486a0b89e7c55378a404bddf93d74dc1
 </script>
 </body>
 </html>

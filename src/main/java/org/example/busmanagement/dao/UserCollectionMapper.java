@@ -25,6 +25,7 @@ public interface UserCollectionMapper {
     UserCollection selectByUserAndTarget(@Param("userId") Integer userId,
                                          @Param("collectionType") Integer collectionType,
                                          @Param("targetId") Integer targetId);
+<<<<<<< HEAD
 
     // 分页查询用户收藏列表
     List<UserCollection> selectPageByUserId(@Param("userId") Integer userId,
@@ -35,4 +36,6 @@ public interface UserCollectionMapper {
     // 统计用户收藏总数
     int countByUserId(@Param("userId") Integer userId,
                      @Param("collectionType") Integer collectionType);
+=======
+>>>>>>> 51be8eca486a0b89e7c55378a404bddf93d74dc1
 }

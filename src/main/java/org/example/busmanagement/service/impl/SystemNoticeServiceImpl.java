@@ -3,10 +3,15 @@ package org.example.busmanagement.service.impl;
 import org.example.busmanagement.dao.SystemNoticeMapper;
 import org.example.busmanagement.exception.BusinessException;
 import org.example.busmanagement.model.entity.SystemNotice;
+<<<<<<< HEAD
 import org.example.busmanagement.model.entity.User;
 import org.example.busmanagement.model.vo.PageResult;
 import org.example.busmanagement.service.SystemNoticeService;
 import org.example.busmanagement.service.UserService;
+=======
+import org.example.busmanagement.model.vo.PageResult;
+import org.example.busmanagement.service.SystemNoticeService;
+>>>>>>> 51be8eca486a0b89e7c55378a404bddf93d74dc1
 import jakarta.annotation.Resource;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -19,13 +24,17 @@ public class SystemNoticeServiceImpl implements SystemNoticeService {
     @Resource
     private SystemNoticeMapper systemNoticeMapper;
 
+<<<<<<< HEAD
     @Resource
     private UserService userService;
 
+=======
+>>>>>>> 51be8eca486a0b89e7c55378a404bddf93d74dc1
     @Override
     @Transactional(rollbackFor = Exception.class)
     public boolean addNotice(SystemNotice notice) {
         // 校验必填字段
+<<<<<<< HEAD
         if (notice.getTitle() == null || notice.getTitle().trim().isEmpty()) {
             throw new BusinessException("标题不能为空");
         }
@@ -49,6 +58,16 @@ public class SystemNoticeServiceImpl implements SystemNoticeService {
         if (notice.getStatus() == null) {
             notice.setStatus(1); // 默认发布状态
         }
+=======
+        if (notice.getTitle() == null || notice.getTitle().trim().isEmpty()
+                || notice.getContent() == null || notice.getContent().trim().isEmpty()
+                || notice.getPublisherId() == null) {
+            throw new BusinessException("标题、内容和发布者ID不能为空");
+        }
+        // 设置默认值
+        notice.setPublishTime(LocalDateTime.now());
+        notice.setStatus(1); // 默认发布状态
+>>>>>>> 51be8eca486a0b89e7c55378a404bddf93d74dc1
         notice.setReadCount(0);
         return systemNoticeMapper.insert(notice) > 0;
     }
@@ -64,6 +83,7 @@ public class SystemNoticeServiceImpl implements SystemNoticeService {
         if (exist == null) {
             throw new BusinessException("通知不存在");
         }
+<<<<<<< HEAD
 
         // 验证标题和内容
         if (notice.getTitle() != null && notice.getTitle().trim().isEmpty()) {
@@ -89,6 +109,8 @@ public class SystemNoticeServiceImpl implements SystemNoticeService {
             notice.setContent(notice.getContent().trim());
         }
 
+=======
+>>>>>>> 51be8eca486a0b89e7c55378a404bddf93d74dc1
         return systemNoticeMapper.update(notice) > 0;
     }
 
@@ -132,6 +154,7 @@ public class SystemNoticeServiceImpl implements SystemNoticeService {
         int queryLimit = limit == null || limit <= 0 ? 5 : limit;
         return systemNoticeMapper.selectLatest(queryLimit);
     }
+<<<<<<< HEAD
 
     @Override
     @Transactional(rollbackFor = Exception.class)
@@ -148,4 +171,6 @@ public class SystemNoticeServiceImpl implements SystemNoticeService {
 
         return systemNoticeMapper.deleteById(noticeId) > 0;
     }
+=======
+>>>>>>> 51be8eca486a0b89e7c55378a404bddf93d74dc1
 }

@@ -1,12 +1,16 @@
 <%@ page contentType="text/html;charset=UTF-8" %>
 <%
     String ctx = request.getContextPath();
+<<<<<<< HEAD
     org.example.busmanagement.model.entity.User loginUser = (org.example.busmanagement.model.entity.User) session.getAttribute("loginUser");
     Integer loginUserId = loginUser != null ? loginUser.getUserId() : null;
     if (loginUserId == null) {
         response.sendRedirect(ctx + "/user/login");
         return;
     }
+=======
+    Integer loginUserId = (Integer) session.getAttribute("loginUser.userId");
+>>>>>>> 51be8eca486a0b89e7c55378a404bddf93d74dc1
 %>
 <!doctype html>
 <html>
@@ -22,6 +26,7 @@
 </nav>
 <div class="container mt-3">
     <div class="card">
+<<<<<<< HEAD
         <div class="card-header d-flex justify-content-between align-items-center">
             <span>收藏列表</span>
             <div>
@@ -51,11 +56,16 @@
                 <ul class="pagination mb-0" id="pagination"></ul>
             </nav>
         </div>
+=======
+        <div class="card-header">收藏列表</div>
+        <ul class="list-group list-group-flush" id="list"></ul>
+>>>>>>> 51be8eca486a0b89e7c55378a404bddf93d74dc1
     </div>
 </div>
 <script src="<%=ctx%>/static/js/jquery-3.6.0.min.js"></script>
 <script>
     const ctx='<%=ctx%>';
+<<<<<<< HEAD
     const userId=<%=loginUserId%>;
     let currentPage = 1;
     const pageSize = 10;
@@ -176,6 +186,25 @@
 
     // 初始加载
     loadList(1);
+=======
+    const userId='<%=loginUserId%>';
+    $.get(ctx+'/collection/list',{userId:userId},r=>{
+        let html='';
+        r.data.forEach(c=>{
+            const name=c.collectionType===1?'线路':'站点';
+            html+=`<li class="list-group-item d-flex justify-content-between">
+                ${name} ID：${c.targetId}
+                <button class="btn btn-sm btn-outline-danger" onclick="cancel(${c.collectionType},${c.targetId})">取消</button>
+            </li>`;
+        });
+        $('#list').html(html);
+    });
+    function cancel(type,id){
+        $.post(ctx+'/collection/cancel',{userId:userId,collectionType:type,targetId:id},r=>{
+            if(r.code===200)location.reload();
+        });
+    }
+>>>>>>> 51be8eca486a0b89e7c55378a404bddf93d74dc1
 </script>
 </body>
 </html>

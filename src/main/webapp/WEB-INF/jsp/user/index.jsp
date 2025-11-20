@@ -58,7 +58,11 @@
     <div class="card">
         <h4>到站记录</h4>
         <a href="<%=ctx%>/arrivalRecord/add">录入到站</a>
+<<<<<<< HEAD
         <a href="<%=ctx%>/arrivalRecord/latest">最近到站</a>
+=======
+        <a href="<%=ctx%>/arrivalRecord/latest/1?limit=10">最近到站</a>
+>>>>>>> 51be8eca486a0b89e7c55378a404bddf93d74dc1
     </div>
 
     <!-- 6 通知公告 -->
@@ -71,7 +75,11 @@
     <!-- 7 收藏 -->
     <div class="card">
         <h4>我的收藏</h4>
+<<<<<<< HEAD
         <a href="<%=ctx%>/collection/list">收藏列表</a>
+=======
+        <a href="<%=ctx%>/collection/list?userId=${sessionScope.loginUser.userId}">收藏列表</a>
+>>>>>>> 51be8eca486a0b89e7c55378a404bddf93d74dc1
     </div>
 
     <!-- 8 日志 -->

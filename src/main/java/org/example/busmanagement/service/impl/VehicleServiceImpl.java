@@ -3,10 +3,15 @@ package org.example.busmanagement.service.impl;
 import org.example.busmanagement.dao.VehicleMapper;
 import org.example.busmanagement.exception.BusinessException;
 import org.example.busmanagement.model.entity.BusVehicle;
+<<<<<<< HEAD
 import org.example.busmanagement.model.entity.BusRoute;
 import org.example.busmanagement.model.vo.PageResult;
 import org.example.busmanagement.service.VehicleService;
 import org.example.busmanagement.service.RouteService;
+=======
+import org.example.busmanagement.model.vo.PageResult;
+import org.example.busmanagement.service.VehicleService;
+>>>>>>> 51be8eca486a0b89e7c55378a404bddf93d74dc1
 import jakarta.annotation.Resource;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -18,9 +23,12 @@ public class VehicleServiceImpl implements VehicleService {
     @Resource
     private VehicleMapper vehicleMapper;
 
+<<<<<<< HEAD
     @Resource
     private RouteService routeService;
 
+=======
+>>>>>>> 51be8eca486a0b89e7c55378a404bddf93d74dc1
     @Override
     public PageResult<BusVehicle> getVehiclePage(int pageNum, int pageSize) {
         int total = vehicleMapper.countTotal();
@@ -47,6 +55,7 @@ public class VehicleServiceImpl implements VehicleService {
     @Override
     @Transactional(rollbackFor = Exception.class)
     public boolean addVehicle(BusVehicle vehicle) {
+<<<<<<< HEAD
         // 验证线路ID是否存在
         if (vehicle.getRouteId() == null) {
             throw new BusinessException("所属线路ID不能为空");
@@ -67,6 +76,12 @@ public class VehicleServiceImpl implements VehicleService {
         // 设置车牌号去除空格
         vehicle.setLicensePlate(vehicle.getLicensePlate().trim());
         
+=======
+        // 校验车牌号唯一性
+        if (vehicleMapper.countByLicensePlate(vehicle.getLicensePlate()) > 0) {
+            throw new BusinessException("车牌号已存在");
+        }
+>>>>>>> 51be8eca486a0b89e7c55378a404bddf93d74dc1
         return vehicleMapper.insert(vehicle) > 0;
     }
 
@@ -76,6 +91,7 @@ public class VehicleServiceImpl implements VehicleService {
         if (vehicle.getVehicleId() == null) {
             throw new BusinessException("车辆ID不能为空");
         }
+<<<<<<< HEAD
         
         // 验证车辆是否存在
         BusVehicle existing = vehicleMapper.selectById(vehicle.getVehicleId());
@@ -103,6 +119,14 @@ public class VehicleServiceImpl implements VehicleService {
         // 设置车牌号去除空格
         vehicle.setLicensePlate(vehicle.getLicensePlate().trim());
         
+=======
+        // 校验车牌号唯一性（排除当前车辆）
+        BusVehicle existing = vehicleMapper.selectById(vehicle.getVehicleId());
+        if (!existing.getLicensePlate().equals(vehicle.getLicensePlate())
+                && vehicleMapper.countByLicensePlate(vehicle.getLicensePlate()) > 0) {
+            throw new BusinessException("车牌号已存在");
+        }
+>>>>>>> 51be8eca486a0b89e7c55378a404bddf93d74dc1
         return vehicleMapper.update(vehicle) > 0;
     }
 
@@ -114,6 +138,7 @@ public class VehicleServiceImpl implements VehicleService {
         }
         return vehicleMapper.updateStatus(vehicleId, status) > 0;
     }
+<<<<<<< HEAD
 
     @Override
     @Transactional(rollbackFor = Exception.class)
@@ -132,4 +157,6 @@ public class VehicleServiceImpl implements VehicleService {
         // 这里先尝试删除，如果失败会抛出异常
         return vehicleMapper.deleteById(vehicleId) > 0;
     }
+=======
+>>>>>>> 51be8eca486a0b89e7c55378a404bddf93d74dc1
 }

@@ -66,9 +66,12 @@
         WHERE station_name LIKE CONCAT('%', #{name}, '%') AND status = 1
         ORDER BY station_name ASC
     </select>
+<<<<<<< HEAD
 
     <!-- 删除站点 -->
     <delete id="deleteById">
         DELETE FROM bus_stations WHERE station_id = #{stationId}
     </delete>
+=======
+>>>>>>> 51be8eca486a0b89e7c55378a404bddf93d74dc1
 </mapper>

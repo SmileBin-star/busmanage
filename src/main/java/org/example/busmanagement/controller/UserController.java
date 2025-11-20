@@ -11,6 +11,10 @@ import org.example.busmanagement.service.UserLoginLogService;
 import jakarta.annotation.Resource;
 import jakarta.servlet.http.HttpServletRequest;
 import org.springframework.stereotype.Controller;
+<<<<<<< HEAD
+=======
+import org.springframework.ui.Model;
+>>>>>>> 51be8eca486a0b89e7c55378a404bddf93d74dc1
 import org.springframework.web.bind.annotation.*;
 import java.time.LocalDateTime;
 
@@ -60,9 +64,14 @@ public class UserController {
                 request.getSession().setAttribute("loginUser", user);
                 request.getSession().setAttribute("currentLogId", logId);
 
+<<<<<<< HEAD
                 System.out.println("===返回给前端的data=" + "/user/index");
                 // 使用 (Object) 强制调用 success(Object data) 方法，确保 data 字段被设置
                 return Result.success((Object) "/user/index");   // 返回相对路径，前端会自动加上context-path
+=======
+                System.out.println("===返回给前端的data=" + "/bus/user/index");
+                return Result.success("/bus/user/index");   // 只传路径，不要传两条参数
+>>>>>>> 51be8eca486a0b89e7c55378a404bddf93d74dc1
             } else {
                 return Result.error("密码错误");
             }
@@ -93,13 +102,23 @@ public class UserController {
         return "redirect:/user/login";
     }
 
+<<<<<<< HEAD
     // 查看个人登录日志页面
     @GetMapping("/loginLogs")
     public String loginLogsPage(HttpServletRequest request) {
+=======
+    // 查看个人登录日志
+    @GetMapping("/loginLogs")
+    public String loginLogs(@RequestParam(defaultValue = "1") int pageNum,
+                           @RequestParam(defaultValue = "10") int pageSize,
+                           HttpServletRequest request,
+                           Model model) {
+>>>>>>> 51be8eca486a0b89e7c55378a404bddf93d74dc1
         User loginUser = (User) request.getSession().getAttribute("loginUser");
         if (loginUser == null) {
             return "redirect:/user/login";
         }
+<<<<<<< HEAD
         return "user/login_logs";
     }
 
@@ -139,4 +158,20 @@ public class UserController {
             return Result.error("系统异常：" + e.getMessage());
         }
     }
+=======
+        PageResult<UserLoginLog> pageResult = loginLogService.getUserLoginLogs(loginUser.getUserId(), pageNum, pageSize);
+        model.addAttribute("pageResult", pageResult);
+        return "user/login_logs";
+    }
+
+    // 管理员查看所有登录日志
+    @GetMapping("/admin/allLogs")
+    public String allLoginLogs(@RequestParam(defaultValue = "1") int pageNum,
+                              @RequestParam(defaultValue = "10") int pageSize,
+                              Model model) {
+        PageResult<UserLoginLog> pageResult = loginLogService.getAllLoginLogs(pageNum, pageSize);
+        model.addAttribute("pageResult", pageResult);
+        return "admin/all_login_logs";
+    }
+>>>>>>> 51be8eca486a0b89e7c55378a404bddf93d74dc1
 }

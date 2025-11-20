@@ -26,6 +26,7 @@
           AND target_id = #{targetId}
     </delete>
 
+<<<<<<< HEAD
     <!-- 按用户ID查询收藏列表（关联查询线路名称和站点名称） -->
     <select id="selectByUserId" resultType="org.example.busmanagement.model.entity.UserCollection">
         SELECT 
@@ -43,6 +44,16 @@
             AND c.collection_type = #{collectionType}
         </if>
         ORDER BY c.collection_time DESC
+=======
+    <!-- 按用户ID查询收藏列表 -->
+    <select id="selectByUserId" resultType="org.example.busmanagement.model.entity.UserCollection">
+        SELECT * FROM user_collections
+        WHERE user_id = #{userId}
+        <if test="collectionType != null">
+            AND collection_type = #{collectionType}
+        </if>
+        ORDER BY collection_time DESC
+>>>>>>> 51be8eca486a0b89e7c55378a404bddf93d74dc1
     </select>
 
     <!-- 检查是否已收藏 -->
@@ -53,6 +64,7 @@
           AND target_id = #{targetId}
         LIMIT 1
     </select>
+<<<<<<< HEAD
 
     <!-- 分页查询用户收藏列表（关联查询线路名称和站点名称） -->
     <select id="selectPageByUserId" resultType="org.example.busmanagement.model.entity.UserCollection">
@@ -82,4 +94,6 @@
             AND collection_type = #{collectionType}
         </if>
     </select>
+=======
+>>>>>>> 51be8eca486a0b89e7c55378a404bddf93d74dc1
 </mapper>

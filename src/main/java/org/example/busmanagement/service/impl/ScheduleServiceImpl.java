@@ -3,12 +3,17 @@ package org.example.busmanagement.service.impl;
 import org.example.busmanagement.dao.ScheduleMapper;
 import org.example.busmanagement.exception.BusinessException;
 import org.example.busmanagement.model.entity.BusSchedule;
+<<<<<<< HEAD
 import org.example.busmanagement.model.entity.BusRoute;
 import org.example.busmanagement.model.entity.BusVehicle;
 import org.example.busmanagement.model.vo.PageResult;
 import org.example.busmanagement.service.ScheduleService;
 import org.example.busmanagement.service.RouteService;
 import org.example.busmanagement.service.VehicleService;
+=======
+import org.example.busmanagement.model.vo.PageResult;
+import org.example.busmanagement.service.ScheduleService;
+>>>>>>> 51be8eca486a0b89e7c55378a404bddf93d74dc1
 import jakarta.annotation.Resource;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -20,12 +25,15 @@ public class ScheduleServiceImpl implements ScheduleService {
     @Resource
     private ScheduleMapper scheduleMapper;
 
+<<<<<<< HEAD
     @Resource
     private RouteService routeService;
 
     @Resource
     private VehicleService vehicleService;
 
+=======
+>>>>>>> 51be8eca486a0b89e7c55378a404bddf93d74dc1
     @Override
     @Transactional(rollbackFor = Exception.class)
     public boolean addSchedule(BusSchedule schedule) {
@@ -112,6 +120,7 @@ public class ScheduleServiceImpl implements ScheduleService {
 
     // 校验调度信息
     private void validateSchedule(BusSchedule schedule) {
+<<<<<<< HEAD
         // 验证线路ID
         if (schedule.getRouteId() == null) {
             throw new BusinessException("线路ID不能为空");
@@ -147,5 +156,22 @@ public class ScheduleServiceImpl implements ScheduleService {
         if (schedule.getActualPassengers() != null && schedule.getActualPassengers() > schedule.getCapacity()) {
             throw new BusinessException("实际载客数不能超过核定载客量");
         }
+=======
+        if (schedule.getRouteId() == null) {
+            throw new BusinessException("线路ID不能为空");
+        }
+        if (schedule.getVehicleId() == null) {
+            throw new BusinessException("车辆ID不能为空");
+        }
+        if (schedule.getDepartureTime() == null || schedule.getDepartureTime().isEmpty()) {
+            throw new BusinessException("发车时间不能为空");
+        }
+        if (schedule.getArrivalTime() == null || schedule.getArrivalTime().isEmpty()) {
+            throw new BusinessException("到达时间不能为空");
+        }
+        if (schedule.getCapacity() == null || schedule.getCapacity() <= 0) {
+            throw new BusinessException("核定载客量必须大于0");
+        }
+>>>>>>> 51be8eca486a0b89e7c55378a404bddf93d74dc1
     }
 }

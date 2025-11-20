@@ -36,6 +36,7 @@ public interface ArrivalRecordMapper {
     List<BusArrivalRecord> selectLatestByStationId(
             @Param("stationId") Integer stationId,
             @Param("limit") Integer limit);
+<<<<<<< HEAD
 
     // 分页查询到站记录
     List<BusArrivalRecord> selectPage(
@@ -51,4 +52,6 @@ public interface ArrivalRecordMapper {
 
     // 删除到站记录
     int deleteById(Integer recordId);
+=======
+>>>>>>> 51be8eca486a0b89e7c55378a404bddf93d74dc1
 }

@@ -26,7 +26,10 @@ public interface SystemNoticeService {
 
     // 获取最新通知
     List<SystemNotice> getLatestNotices(Integer limit);
+<<<<<<< HEAD
 
     // 删除通知
     boolean deleteNotice(Integer noticeId);
+=======
+>>>>>>> 51be8eca486a0b89e7c55378a404bddf93d74dc1
 }

@@ -17,6 +17,7 @@
 <div class="container mt-3">
     <div class="card p-3">
         <form id="form">
+<<<<<<< HEAD
             <div class="mb-3">
                 <label>班次</label>
                 <select name="scheduleId" id="scheduleId" class="form-control" required>
@@ -38,6 +39,12 @@
             <div class="mb-3"><label>延误分钟数（可选）</label><input name="delayMinutes" type="number" class="form-control" value="0"></div>
             <div class="mb-3"><label>上车人数（可选）</label><input name="passengerIn" type="number" class="form-control" value="0"></div>
             <div class="mb-3"><label>下车人数（可选）</label><input name="passengerOut" type="number" class="form-control" value="0"></div>
+=======
+            <div class="mb-3"><label>车辆ID</label><input name="vehicleId" type="number" class="form-control" required></div>
+            <div class="mb-3"><label>站点ID</label><input name="stationId" type="number" class="form-control" required></div>
+            <div class="mb-3"><label>班次ID</label><input name="scheduleId" type="number" class="form-control" required></div>
+            <div class="mb-3"><label>到达时间</label><input name="actualArrivalTime" type="datetime-local" class="form-control" required></div>
+>>>>>>> 51be8eca486a0b89e7c55378a404bddf93d74dc1
             <button class="btn btn-primary">保存</button>
         </form>
     </div>
@@ -45,6 +52,7 @@
 <script src="<%=ctx%>/static/js/jquery-3.6.0.min.js"></script>
 <script>
     const ctx='<%=ctx%>';
+<<<<<<< HEAD
     
     // 存储班次列表数据
     let scheduleList = [];
@@ -136,6 +144,13 @@
                 alert('添加失败: ' + (xhr.responseJSON ? xhr.responseJSON.msg : '请检查网络连接'));
             }
         });
+=======
+    $('#form').submit(function(){
+        $.post(ctx+'/arrivalRecord/add', JSON.stringify(Object.fromEntries($(this).serializeArray().map(x=>[x.name,x.value]))), r=>{
+            if(r.code===200){location.href=ctx+'/user/index';}
+            else{alert(r.msg);}
+        },'json');
+>>>>>>> 51be8eca486a0b89e7c55378a404bddf93d74dc1
         return false;
     });
 </script>
