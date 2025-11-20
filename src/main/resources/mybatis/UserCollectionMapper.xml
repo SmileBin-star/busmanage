@@ -1,0 +1,85 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="org.example.busmanagement.dao.UserCollectionMapper">
+
+    <!-- 新增收藏 -->
+    <insert id="insert" useGeneratedKeys="true" keyProperty="collectionId">
+        INSERT INTO user_collections (
+            user_id, collection_type, target_id, collection_time
+        ) VALUES (
+                     #{userId}, #{collectionType}, #{targetId}, #{collectionTime}
+                 )
+    </insert>
+
+    <!-- 按ID删除收藏 -->
+    <delete id="deleteById">
+        DELETE FROM user_collections WHERE collection_id = #{collectionId}
+    </delete>
+
+    <!-- 按用户ID+类型+目标ID删除收藏 -->
+    <delete id="deleteByUserAndTarget">
+        DELETE FROM user_collections
+        WHERE user_id = #{userId}
+          AND collection_type = #{collectionType}
+          AND target_id = #{targetId}
+    </delete>
+
+    <!-- 按用户ID查询收藏列表（关联查询线路名称和站点名称） -->
+    <select id="selectByUserId" resultType="org.example.busmanagement.model.entity.UserCollection">
+        SELECT 
+            c.*,
+            CASE 
+                WHEN c.collection_type = 1 THEN r.route_name
+                WHEN c.collection_type = 2 THEN s.station_name
+                ELSE NULL
+            END AS target_name
+        FROM user_collections c
+        LEFT JOIN bus_routes r ON c.collection_type = 1 AND c.target_id = r.route_id
+        LEFT JOIN bus_stations s ON c.collection_type = 2 AND c.target_id = s.station_id
+        WHERE c.user_id = #{userId}
+        <if test="collectionType != null">
+            AND c.collection_type = #{collectionType}
+        </if>
+        ORDER BY c.collection_time DESC
+    </select>
+
+    <!-- 检查是否已收藏 -->
+    <select id="selectByUserAndTarget" resultType="org.example.busmanagement.model.entity.UserCollection">
+        SELECT * FROM user_collections
+        WHERE user_id = #{userId}
+          AND collection_type = #{collectionType}
+          AND target_id = #{targetId}
+        LIMIT 1
+    </select>
+
+    <!-- 分页查询用户收藏列表（关联查询线路名称和站点名称） -->
+    <select id="selectPageByUserId" resultType="org.example.busmanagement.model.entity.UserCollection">
+        SELECT 
+            c.*,
+            CASE 
+                WHEN c.collection_type = 1 THEN r.route_name
+                WHEN c.collection_type = 2 THEN s.station_name
+                ELSE NULL
+            END AS target_name
+        FROM user_collections c
+        LEFT JOIN bus_routes r ON c.collection_type = 1 AND c.target_id = r.route_id
+        LEFT JOIN bus_stations s ON c.collection_type = 2 AND c.target_id = s.station_id
+        WHERE c.user_id = #{userId}
+        <if test="collectionType != null">
+            AND c.collection_type = #{collectionType}
+        </if>
+        ORDER BY c.collection_time DESC
+        LIMIT #{pageNum}, #{pageSize}
+    </select>
+
+    <!-- 统计用户收藏总数 -->
+    <select id="countByUserId" resultType="int">
+        SELECT COUNT(*) FROM user_collections
+        WHERE user_id = #{userId}
+        <if test="collectionType != null">
+            AND collection_type = #{collectionType}
+        </if>
+    </select>
+</mapper>

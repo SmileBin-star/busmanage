@@ -1,0 +1,105 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="org.example.busmanagement.dao.RouteStationMapper">
+
+    <!-- 基础查询：按ID -->
+    <select id="selectById" resultType="org.example.busmanagement.model.entity.BusRouteStation">
+        SELECT * FROM bus_route_stations WHERE id = #{id}
+    </select>
+
+    <!-- 按线路ID查询所有关联 -->
+    <select id="selectByRouteId" resultType="org.example.busmanagement.model.entity.BusRouteStation">
+        SELECT * FROM bus_route_stations
+        WHERE route_id = #{routeId}
+        ORDER BY station_order ASC
+    </select>
+
+    <!-- 按站点ID查询所有关联线路 -->
+    <select id="selectByStationId" resultType="org.example.busmanagement.model.entity.BusRouteStation">
+        SELECT * FROM bus_route_stations
+        WHERE station_id = #{stationId}
+        ORDER BY route_id ASC
+    </select>
+
+    <!-- 关联查询线路的站点信息（包含站点详情） -->
+    <select id="selectWithStationInfo" resultType="org.example.busmanagement.model.entity.BusRouteStation">
+        SELECT
+            rs.*,
+            s.station_name,
+            s.latitude,
+            s.longitude,
+            s.address
+        FROM bus_route_stations rs
+                 LEFT JOIN bus_stations s ON rs.station_id = s.station_id
+        WHERE rs.route_id = #{routeId}
+        ORDER BY rs.station_order ASC
+    </select>
+
+    <!-- 查询线路最大站点顺序 -->
+    <select id="selectMaxOrderByRouteId" resultType="int">
+        SELECT IFNULL(MAX(station_order), 0) FROM bus_route_stations
+        WHERE route_id = #{routeId}
+    </select>
+
+    <!-- 查询前一站信息 -->
+    <select id="selectPrevStation" resultType="org.example.busmanagement.model.entity.BusRouteStation">
+        SELECT * FROM bus_route_stations
+        WHERE route_id = #{routeId} AND station_order = #{stationOrder} - 1
+    </select>
+
+    <!-- 插入单条关联 -->
+    <insert id="insert" useGeneratedKeys="true" keyProperty="id">
+        INSERT INTO bus_route_stations (
+            route_id, station_id, station_order, distance_from_prev, estimated_time
+        ) VALUES (
+                     #{routeId}, #{stationId}, #{stationOrder}, #{distanceFromPrev}, #{estimatedTime}
+                 )
+    </insert>
+
+    <!-- 批量插入 -->
+    <insert id="batchInsert">
+        INSERT INTO bus_route_stations (
+        route_id, station_id, station_order, distance_from_prev, estimated_time
+        ) VALUES
+        <foreach collection="list" item="item" separator=",">
+            (#{item.routeId}, #{item.stationId}, #{item.stationOrder}, #{item.distanceFromPrev}, #{item.estimatedTime})
+        </foreach>
+    </insert>
+
+    <!-- 更新关联信息 -->
+    <update id="update">
+        UPDATE bus_route_stations SET
+                                      station_order = #{stationOrder},
+                                      distance_from_prev = #{distanceFromPrev},
+                                      estimated_time = #{estimatedTime}
+        WHERE id = #{id}
+    </update>
+
+    <!-- 批量更新 -->
+    <update id="batchUpdate">
+        <foreach collection="list" item="item" separator=";">
+            UPDATE bus_route_stations SET
+            station_order = #{item.stationOrder},
+            distance_from_prev = #{item.distanceFromPrev},
+            estimated_time = #{item.estimatedTime}
+            WHERE id = #{item.id}
+        </foreach>
+    </update>
+
+    <!-- 按ID删除 -->
+    <delete id="deleteById">
+        DELETE FROM bus_route_stations WHERE id = #{id}
+    </delete>
+
+    <!-- 按线路ID删除所有关联 -->
+    <delete id="deleteByRouteId">
+        DELETE FROM bus_route_stations WHERE route_id = #{routeId}
+    </delete>
+
+    <!-- 按站点ID删除所有关联 -->
+    <delete id="deleteByStationId">
+        DELETE FROM bus_route_stations WHERE station_id = #{stationId}
+    </delete>
+</mapper>

@@ -1,0 +1,115 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="org.example.busmanagement.dao.ArrivalRecordMapper">
+
+    <!-- 新增到站记录 -->
+    <insert id="insert" useGeneratedKeys="true" keyProperty="recordId">
+        INSERT INTO bus_arrival_records (
+            vehicle_id, station_id, schedule_id, actual_arrival_time,
+            actual_departure_time, delay_minutes, passenger_in, passenger_out
+        ) VALUES (
+                     #{vehicleId}, #{stationId}, #{scheduleId}, #{actualArrivalTime},
+                     #{actualDepartureTime}, #{delayMinutes, jdbcType=INTEGER},
+                     #{passengerIn, jdbcType=INTEGER}, #{passengerOut, jdbcType=INTEGER}
+                 )
+    </insert>
+
+    <!-- 批量新增 -->
+    <insert id="batchInsert">
+        INSERT INTO bus_arrival_records (
+        vehicle_id, station_id, schedule_id, actual_arrival_time,
+        actual_departure_time, delay_minutes, passenger_in, passenger_out
+        ) VALUES
+        <foreach collection="list" item="item" separator=",">
+            (
+            #{item.vehicleId}, #{item.stationId}, #{item.scheduleId}, #{item.actualArrivalTime},
+            #{item.actualDepartureTime}, #{item.delayMinutes, jdbcType=INTEGER},
+            #{item.passengerIn, jdbcType=INTEGER}, #{item.passengerOut, jdbcType=INTEGER}
+            )
+        </foreach>
+    </insert>
+
+    <!-- 根据ID查询 -->
+    <select id="selectById" resultType="org.example.busmanagement.model.entity.BusArrivalRecord">
+        SELECT * FROM bus_arrival_records WHERE record_id = #{recordId}
+    </select>
+
+    <!-- 根据班次ID查询 -->
+    <select id="selectByScheduleId" resultType="org.example.busmanagement.model.entity.BusArrivalRecord">
+        SELECT * FROM bus_arrival_records
+        WHERE schedule_id = #{scheduleId}
+        ORDER BY actual_arrival_time ASC
+    </select>
+
+    <!-- 根据车辆和站点查询 -->
+    <select id="selectByVehicleAndStation" resultType="org.example.busmanagement.model.entity.BusArrivalRecord">
+        SELECT * FROM bus_arrival_records
+        WHERE vehicle_id = #{vehicleId} AND station_id = #{stationId}
+        ORDER BY actual_arrival_time DESC
+        LIMIT 1
+    </select>
+
+    <!-- 更新出发时间 -->
+    <update id="updateDepartureTime">
+        UPDATE bus_arrival_records
+        SET actual_departure_time = #{actualDepartureTime}
+        WHERE record_id = #{recordId}
+    </update>
+
+    <!-- 更新乘客数量 -->
+    <update id="updatePassengerCount">
+        UPDATE bus_arrival_records
+        SET passenger_in = #{passengerIn},
+            passenger_out = #{passengerOut}
+        WHERE record_id = #{recordId}
+    </update>
+
+    <!-- 查询站点最新记录 -->
+    <select id="selectLatestByStationId" resultType="org.example.busmanagement.model.entity.BusArrivalRecord">
+        SELECT * FROM bus_arrival_records
+        WHERE station_id = #{stationId}
+        ORDER BY actual_arrival_time DESC
+        LIMIT #{limit}
+    </select>
+
+    <!-- 分页查询到站记录（关联查询站点和车辆信息） -->
+    <select id="selectPage" resultType="org.example.busmanagement.model.entity.BusArrivalRecord">
+        SELECT 
+            ar.record_id,
+            ar.vehicle_id,
+            ar.station_id,
+            ar.schedule_id,
+            ar.actual_arrival_time,
+            ar.actual_departure_time,
+            ar.delay_minutes,
+            ar.passenger_in,
+            ar.passenger_out,
+            s.station_name,
+            v.license_plate
+        FROM bus_arrival_records ar
+        LEFT JOIN bus_stations s ON ar.station_id = s.station_id
+        LEFT JOIN bus_vehicles v ON ar.vehicle_id = v.vehicle_id
+        <where>
+            <if test="scheduleId != null">AND ar.schedule_id = #{scheduleId}</if>
+            <if test="stationId != null">AND ar.station_id = #{stationId}</if>
+        </where>
+        ORDER BY ar.actual_arrival_time DESC
+        LIMIT #{pageNum}, #{pageSize}
+    </select>
+
+    <!-- 统计总数 -->
+    <select id="countTotal" resultType="int">
+        SELECT COUNT(*) FROM bus_arrival_records
+        <where>
+            <if test="scheduleId != null">AND schedule_id = #{scheduleId}</if>
+            <if test="stationId != null">AND station_id = #{stationId}</if>
+        </where>
+    </select>
+
+    <!-- 删除到站记录 -->
+    <delete id="deleteById">
+        DELETE FROM bus_arrival_records WHERE record_id = #{recordId}
+    </delete>
+</mapper>

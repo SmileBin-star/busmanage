@@ -1,0 +1,45 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="org.example.busmanagement.dao.UserLoginLogMapper">
+
+    <insert id="insert" useGeneratedKeys="true" keyProperty="logId">
+        INSERT INTO user_login_logs (
+            user_id, login_time, login_ip, login_status, logout_time
+        ) VALUES (
+            #{userId}, #{loginTime}, #{loginIp}, #{loginStatus}, #{logoutTime}
+        )
+    </insert>
+
+    <update id="updateLogoutTime">
+        UPDATE user_login_logs SET
+            logout_time = #{logoutTime}
+        WHERE log_id = #{logId}
+    </update>
+
+    <select id="selectByUserId" resultType="org.example.busmanagement.model.entity.UserLoginLog">
+        SELECT l.*, u.username 
+        FROM user_login_logs l
+        LEFT JOIN users u ON l.user_id = u.user_id
+        WHERE l.user_id = #{userId}
+        ORDER BY login_time DESC
+        LIMIT #{pageNum}, #{pageSize}
+    </select>
+
+    <select id="countByUserId" resultType="int">
+        SELECT COUNT(*) FROM user_login_logs WHERE user_id = #{userId}
+    </select>
+
+    <select id="selectAll" resultType="org.example.busmanagement.model.entity.UserLoginLog">
+        SELECT l.*, u.username 
+        FROM user_login_logs l
+        LEFT JOIN users u ON l.user_id = u.user_id
+        ORDER BY login_time DESC
+        LIMIT #{pageNum}, #{pageSize}
+    </select>
+
+    <select id="countTotal" resultType="int">
+        SELECT COUNT(*) FROM user_login_logs
+    </select>
+</mapper>

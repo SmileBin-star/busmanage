@@ -1,0 +1,117 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="org.example.busmanagement.dao.ScheduleMapper">
+
+    <!-- 基础查询：按ID -->
+    <select id="selectById" resultType="org.example.busmanagement.model.entity.BusSchedule">
+        SELECT * FROM bus_schedules WHERE schedule_id = #{scheduleId}
+    </select>
+
+    <!-- 按线路ID查询 -->
+    <select id="selectByRouteId" resultType="org.example.busmanagement.model.entity.BusSchedule">
+        SELECT * FROM bus_schedules
+        WHERE route_id = #{routeId}
+        ORDER BY departure_time ASC
+    </select>
+
+    <!-- 按车辆ID查询 -->
+    <select id="selectByVehicleId" resultType="org.example.busmanagement.model.entity.BusSchedule">
+        SELECT * FROM bus_schedules
+        WHERE vehicle_id = #{vehicleId}
+        ORDER BY departure_time ASC
+    </select>
+
+    <!-- 按司机ID查询 -->
+    <select id="selectByDriverId" resultType="org.example.busmanagement.model.entity.BusSchedule">
+        SELECT * FROM bus_schedules
+        WHERE driver_id = #{driverId}
+        ORDER BY departure_time ASC
+    </select>
+
+    <!-- 按状态查询 -->
+    <select id="selectByStatus" resultType="org.example.busmanagement.model.entity.BusSchedule">
+        SELECT * FROM bus_schedules
+        WHERE status = #{status}
+        ORDER BY departure_time ASC
+    </select>
+
+    <!-- 分页查询 -->
+    <select id="selectPage" resultType="org.example.busmanagement.model.entity.BusSchedule">
+        SELECT * FROM bus_schedules
+        <where>
+            <if test="routeId != null">AND route_id = #{routeId}</if>
+            <if test="status != null">AND status = #{status}</if>
+        </where>
+        ORDER BY departure_time DESC
+        LIMIT #{pageNum}, #{pageSize}
+    </select>
+
+    <!-- 统计总数 -->
+    <select id="countTotal" resultType="int">
+        SELECT COUNT(*) FROM bus_schedules
+        <where>
+            <if test="routeId != null">AND route_id = #{routeId}</if>
+            <if test="status != null">AND status = #{status}</if>
+        </where>
+    </select>
+
+    <!-- 插入调度 -->
+    <insert id="insert" useGeneratedKeys="true" keyProperty="scheduleId">
+        INSERT INTO bus_schedules (
+            route_id, departure_time, arrival_time, vehicle_id,
+            driver_id, capacity, actual_passengers, status
+        ) VALUES (
+                     #{routeId}, #{departureTime}, #{arrivalTime}, #{vehicleId},
+                     #{driverId}, #{capacity}, #{actualPassengers}, #{status}
+                 )
+    </insert>
+
+    <!-- 批量插入 -->
+    <insert id="batchInsert">
+        INSERT INTO bus_schedules (
+        route_id, departure_time, arrival_time, vehicle_id,
+        driver_id, capacity, actual_passengers, status
+        ) VALUES
+        <foreach collection="list" item="item" separator=",">
+            (
+            #{item.routeId}, #{item.departureTime}, #{item.arrivalTime}, #{item.vehicleId},
+            #{item.driverId}, #{item.capacity}, #{item.actualPassengers}, #{item.status}
+            )
+        </foreach>
+    </insert>
+
+    <!-- 更新调度 -->
+    <update id="update">
+        UPDATE bus_schedules SET
+                                 route_id = #{routeId},
+                                 departure_time = #{departureTime},
+                                 arrival_time = #{arrivalTime},
+                                 vehicle_id = #{vehicleId},
+                                 driver_id = #{driverId},
+                                 capacity = #{capacity},
+                                 actual_passengers = #{actualPassengers},
+                                 status = #{status}
+        WHERE schedule_id = #{scheduleId}
+    </update>
+
+    <!-- 批量更新状态 -->
+    <update id="batchUpdateStatus">
+        UPDATE bus_schedules SET status = #{status}
+        WHERE schedule_id IN
+        <foreach collection="ids" item="id" open="(" separator="," close=")">
+            #{id}
+        </foreach>
+    </update>
+
+    <!-- 删除调度 -->
+    <delete id="deleteById">
+        DELETE FROM bus_schedules WHERE schedule_id = #{scheduleId}
+    </delete>
+    <update id="updateStatus">
+        UPDATE bus_schedules
+        SET status = #{status}
+        WHERE schedule_id = #{scheduleId}
+    </update>
+</mapper>
