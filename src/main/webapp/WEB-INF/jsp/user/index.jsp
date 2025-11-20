@@ -1,68 +1,84 @@
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
-<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
+<%
+    String ctx = request.getContextPath();
+%>
 <!DOCTYPE html>
-<html lang="zh-CN">
+<html>
 <head>
-    <meta charset="UTF-8">
-    <title>公交管理系统 - 首页</title>
-    <link href="https://cdn.jsdelivr.net/npm/tailwindcss@2.2.19/dist/tailwind.min.css" rel="stylesheet">
+    <title>公交系统-首页</title>
+    <meta charset="utf-8"/>
+    <style>
+        body{margin:0;font-family:Arial;background:#f5f5f5}
+        .header{background:#007bff;color:#fff;padding:15px 30px;font-size:20px}
+        .header a{float:right;color:#fff;font-size:14px;text-decoration:none}
+        .container{padding:30px;display:flex;flex-wrap:wrap;gap:20px}
+        .card{background:#fff;width:220px;padding:20px;border-radius:6px;box-shadow:0 0 6px #ccc;text-align:center}
+        .card h4{margin:0 0 10px}
+        .card a{display:inline-block;margin:5px 0;padding:6px 12px;background:#007bff;color:#fff;text-decoration:none;border-radius:4px;font-size:14px}
+        .card a:hover{background:#0056b3}
+    </style>
 </head>
-<body class="bg-gray-100">
-<div class="container mx-auto p-6">
-    <h1 class="text-3xl font-bold mb-6 text-center">欢迎使用公交管理系统</h1>
+<body>
+<div class="header">
+    公交管理系统-首页
+    <a href="<%=ctx%>/user/logout">退出登录</a>
+    <div style="clear:both"></div>
+</div>
 
-    <div class="grid grid-cols-2 md:grid-cols-3 gap-6">
-        <!-- 站点管理 -->
-        <a href="<c:url value='/station/list'/>" class="block p-6 bg-white rounded-lg shadow hover:shadow-lg">
-            <h2 class="text-xl font-semibold text-blue-600">站点管理</h2>
-            <p class="text-gray-600 mt-2">查看、搜索、管理所有公交站点</p>
-        </a>
-
-        <!-- 线路管理 -->
-        <a href="<c:url value='/route/manage'/>" class="block p-6 bg-white rounded-lg shadow hover:shadow-lg">
-            <h2 class="text-xl font-semibold text-green-600">线路管理</h2>
-            <p class="text-gray-600 mt-2">管理公交线路及站点关联</p>
-        </a>
-
-        <!-- 车辆管理 -->
-        <a href="<c:url value='/vehicle/manage'/>" class="block p-6 bg-white rounded-lg shadow hover:shadow-lg">
-            <h2 class="text-xl font-semibold text-purple-600">车辆管理</h2>
-            <p class="text-gray-600 mt-2">车辆信息及状态管理</p>
-        </a>
-
-        <!-- 调度管理 -->
-        <a href="<c:url value='/schedule/manage'/>" class="block p-6 bg-white rounded-lg shadow hover:shadow-lg">
-            <h2 class="text-xl font-semibold text-orange-600">调度管理</h2>
-            <p class="text-gray-600 mt-2">班次调度与状态管理</p>
-        </a>
-
-        <!-- 到站记录 -->
-        <a href="<c:url value='/arrivalRecord/latest/0?limit=10'/>" class="block p-6 bg-white rounded-lg shadow hover:shadow-lg">
-            <h2 class="text-xl font-semibold text-red-600">到站记录</h2>
-            <p class="text-gray-600 mt-2">查看最近车辆到站信息</p>
-        </a>
-
-        <!-- 系统公告 -->
-        <a href="<c:url value='/systemNotice/page'/>" class="block p-6 bg-white rounded-lg shadow hover:shadow-lg">
-            <h2 class="text-xl font-semibold text-indigo-600">系统公告</h2>
-            <p class="text-gray-600 mt-2">查看平台最新通知</p>
-        </a>
-
-        <!-- 我的收藏 -->
-        <a href="<c:url value='/collection/list?userId=${sessionScope.loginUser.userId}'/>" class="block p-6 bg-white rounded-lg shadow hover:shadow-lg">
-            <h2 class="text-xl font-semibold text-pink-600">我的收藏</h2>
-            <p class="text-gray-600 mt-2">收藏的线路与站点</p>
-        </a>
-
-        <!-- 登录日志 -->
-        <a href="<c:url value='/user/loginLogs'/>" class="block p-6 bg-white rounded-lg shadow hover:shadow-lg">
-            <h2 class="text-xl font-semibold text-gray-600">登录日志</h2>
-            <p class="text-gray-600 mt-2">查看个人登录记录</p>
-        </a>
+<div class="container">
+    <!-- 1 线路 -->
+    <div class="card">
+        <h4>线路管理</h4>
+        <a href="<%=ctx%>/route/manage">线路列表</a>
+        <a href="<%=ctx%>/route/add">新增线路</a>
     </div>
 
-    <div class="text-center mt-10">
-        <a href="<c:url value='/user/logout'/>" class="text-red-500 hover:underline">退出登录</a>
+    <!-- 2 站点 -->
+    <div class="card">
+        <h4>站点管理</h4>
+        <a href="<%=ctx%>/station/manage">站点列表</a>
+        <a href="<%=ctx%>/station/add">新增站点</a>
+    </div>
+
+    <!-- 3 车辆 -->
+    <div class="card">
+        <h4>车辆管理</h4>
+        <a href="<%=ctx%>/vehicle/manage">车辆列表</a>
+        <a href="<%=ctx%>/vehicle/add">新增车辆</a>
+    </div>
+
+    <!-- 4 班次 -->
+    <div class="card">
+        <h4>班次调度</h4>
+        <a href="<%=ctx%>/schedule/manage">班次列表</a>
+        <a href="<%=ctx%>/schedule/add">新增班次</a>
+    </div>
+
+    <!-- 5 到站记录 -->
+    <div class="card">
+        <h4>到站记录</h4>
+        <a href="<%=ctx%>/arrivalRecord/add">录入到站</a>
+        <a href="<%=ctx%>/arrivalRecord/latest/1?limit=10">最近到站</a>
+    </div>
+
+    <!-- 6 通知公告 -->
+    <div class="card">
+        <h4>系统通知</h4>
+        <a href="<%=ctx%>/systemNotice/page">通知列表</a>
+        <a href="<%=ctx%>/systemNotice/add">发布通知</a>
+    </div>
+
+    <!-- 7 收藏 -->
+    <div class="card">
+        <h4>我的收藏</h4>
+        <a href="<%=ctx%>/collection/list?userId=${sessionScope.loginUser.userId}">收藏列表</a>
+    </div>
+
+    <!-- 8 日志 -->
+    <div class="card">
+        <h4>登录日志</h4>
+        <a href="<%=ctx%>/user/loginLogs">我的日志</a>
+        <a href="<%=ctx%>/user/admin/allLogs">所有日志</a>
     </div>
 </div>
 </body>

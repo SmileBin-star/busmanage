@@ -36,6 +36,7 @@ public class UserController {
     public Result login(@RequestParam String username,
                        @RequestParam String password,
                        HttpServletRequest request) {
+
         try {
             // 1. 查询用户
             User user = userService.getUserByUsername(username);
@@ -60,10 +61,8 @@ public class UserController {
                 request.getSession().setAttribute("loginUser", user);
                 request.getSession().setAttribute("currentLogId", logId);
 
-                // 根据角色跳转不同首页
-                String ctx = request.getContextPath();   //  "/bus"
-                String redirectUrl = ctx + "/user/index";
-                return Result.success(redirectUrl); // 前端接收后跳转
+                System.out.println("===返回给前端的data=" + "/bus/user/index");
+                return Result.success("/bus/user/index");   // 只传路径，不要传两条参数
             } else {
                 return Result.error("密码错误");
             }
@@ -71,9 +70,14 @@ public class UserController {
             return Result.error(e.getMessage());
         }
     }
-    @GetMapping("/index")
-    public String userIndex() {
-        return "user/index"; // 返回统一的 index 页面
+
+    @GetMapping("/index")          // 地址 /user/index
+    public String home(HttpSession session) {
+        // 如果担心用户直接敲地址，可以在这里再校验一次 session
+        if (session.getAttribute("loginUser") == null) {
+            return "redirect:/user/login";
+        }
+        return "user/index";        // 这里写你真正的首页 html（不带 .jsp）
     }
 
     // 登出
